@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Access - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css"> <!-- Reusing the same stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-signup-body"> <!-- Optional class for specific body styling -->
+
+    <div class="container login-signup-page">
+        <header class="page-header">
+            <h1>Welcome</h1>
+            <p>Sign in to access your account</p>
+        </header>
+
+        <main class="access-card">
+            <header class="card-header">
+                <h2>Account Access</h2>
+                <p>Login to your account or create a new one</p>
+            </header>
+
+            <!-- Tabs Buttons -->
+            <div class="tabs form-tabs" id="form-tabs-container">
+                <button class="tab-button active" onclick="switchAuthTab(event, 'login-form')">Login</button>
+                <button class="tab-button" onclick="switchAuthTab(event, 'signup-form')">Sign Up</button>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="tab-content-area form-content-area" id="form-content-container">
+
+                <!-- Login Form Pane (Visible by default) -->
+                <div id="login-form" class="tab-pane active">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <div class="input-wrapper">
+                                <input type="email" id="login-email" name="email" placeholder="name@example.com" required>
+                                <i class="fas fa-exclamation-circle error-icon"></i> <!-- Example Error Icon -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="login-password">Password</label>
+                                <a href="#" class="forgot-password">Forgot password?</a>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="password" id="login-password" name="password" placeholder="********" required>
+                                 <i class="fas fa-exclamation-circle error-icon"></i> <!-- Example Error Icon -->
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">Sign In</button>
+                    </form>
+                </div>
+
+                <!-- Sign Up Form Pane (Hidden by default) -->
+                <div id="signup-form" class="tab-pane">
+                    <form action="#" method="post">
+                        <div class="form-row">
+                            <div class="form-group half-width">
+                                <label for="signup-first-name">First Name</label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="signup-first-name" name="first_name" placeholder="John" required>
+                                     <i class="fas fa-exclamation-circle error-icon"></i> <!-- Example Error Icon -->
+                                </div>
+                            </div>
+                            <div class="form-group half-width">
+                                <label for="signup-last-name">Last Name</label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="signup-last-name" name="last_name" placeholder="Doe" required>
+                                </div> <!-- No error icon shown in signup last name -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <div class="input-wrapper">
+                                <input type="email" id="signup-email" name="email" placeholder="name@example.com" required>
+                                <!-- No error icon shown in signup email -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="signup-password" name="password" placeholder="********" required>
+                                 <i class="fas fa-exclamation-circle error-icon"></i> <!-- Example Error Icon -->
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-button">Create Account</button>
+                    </form>
+                </div>
+
+                 <p class="terms-text">
+                    By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                 </p>
+
+            </div> <!-- End .tab-content-area -->
+        </main> <!-- End .access-card -->
+
+    </div> <!-- End .container -->
+
+    <!-- Bottom navigation removed for cleaner auth experience -->
+
+    <!-- Supabase JS Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>b

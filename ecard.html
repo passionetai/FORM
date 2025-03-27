@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Voucher Purchase - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container voucher-page">
+        <header class="page-header">
+            <h1>E-Voucher Purchase</h1>
+            <p>Buy e-vouchers for trading signals and premium features</p>
+        </header>
+
+        <section class="purchase-section">
+            <!-- Tabs Buttons -->
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchVoucherTab(event, 'vip-membership-content')">VIP Membership</button>
+                <button class="tab-button" onclick="switchVoucherTab(event, 'payment-methods-content')">Payment Methods</button>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="tab-content-area">
+                <!-- VIP Membership Content Pane (Visible by default) -->
+                <div id="vip-membership-content" class="tab-pane" style="display: block;">
+                    <div class="pricing-plans">
+                        <!-- Basic Plan -->
+                        <div class="plan-card">
+                            <h2 class="plan-title">Basic</h2>
+                            <p class="plan-duration">6 days access</p>
+                            <p class="plan-price">$17</p>
+                            <ul class="features">
+                                <li><i class="fas fa-check-circle feature-icon"></i> Access to basic signals</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Market analysis</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Community access</li>
+                            </ul>
+                            <a href="#" class="purchase-button">
+                                Purchase <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <!-- Standard Plan (Recommended) -->
+                        <div class="plan-card recommended">
+                             <span class="recommended-badge">Recommended</span>
+                            <h2 class="plan-title">Standard</h2>
+                            <p class="plan-duration">15 days access</p>
+                            <p class="plan-price">$44</p>
+                            <ul class="features">
+                                <li><i class="fas fa-check-circle feature-icon"></i> All Basic features</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Premium signals</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Trading strategy guides</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Email support</li>
+                            </ul>
+                            <a href="#" class="purchase-button">
+                                Purchase <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <!-- Premium Plan -->
+                        <div class="plan-card">
+                            <h2 class="plan-title">Premium</h2>
+                            <p class="plan-duration">30 days access</p>
+                            <p class="plan-price">$80</p>
+                            <ul class="features">
+                                <li><i class="fas fa-check-circle feature-icon"></i> All Standard features</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> VIP signals</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> 1-on-1 consultation</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Priority support</li>
+                                <li><i class="fas fa-check-circle feature-icon"></i> Advanced analytics</li>
+                            </ul>
+                            <a href="#" class="purchase-button">
+                                Purchase <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods Content Pane -->
+                <div id="payment-methods-content" class="tab-pane" style="display: none;">
+                    <div class="payment-methods-container">
+                        <h2>Accepted Payment Methods</h2>
+                        <p class="payment-intro">Multiple secure options to purchase your e-vouchers</p>
+
+                        <div class="payment-options-list">
+                            <!-- Perfect Money -->
+                            <div class="payment-option">
+                                <i class="fas fa-dollar-sign payment-icon"></i>
+                                <div class="payment-option-text">
+                                    <h3>Perfect Money</h3>
+                                    <p>Transfer directly from your Perfect Money wallet</p>
+                                </div>
+                            </div>
+                            <!-- USDT (Tether) -->
+                            <div class="payment-option">
+                                <i class="fas fa-wallet payment-icon"></i>
+                                <div class="payment-option-text">
+                                    <h3>USDT (Tether</h3>
+                                    <p>Pay with USDT on TRC20 or ERC20 networks</p>
+                                </div>
+                            </div>
+                            <!-- Mobile Money -->
+                            <div class="payment-option">
+                                <i class="fas fa-mobile-alt payment-icon"></i>
+                                <div class="payment-option-text">
+                                    <h3>Mobile Money</h3>
+                                    <p>Pay directly using mobile money services</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="payment-note">
+                            After payment, e-voucher credits will be added to your account automatically. Contact support if you experience any issues.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+         <a href="index.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+         <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
+         <a href="ecard.html" class="nav-item active"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login</span> </a>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>

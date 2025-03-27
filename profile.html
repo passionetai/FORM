@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css"> <!-- Reusing the main stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="profile-body"> <!-- Optional class -->
+
+    <div class="container profile-page">
+        <header class="page-header">
+            <h1>Your Profile</h1>
+            <p>Manage your account and e-vouchers</p>
+        </header>
+
+        <!-- Main Profile Card -->
+        <section class="profile-card">
+            <div class="profile-banner"></div>
+            <div class="profile-avatar">
+                <span>J</span> <!-- Placeholder Initial -->
+            </div>
+            <h2 class="profile-name">John Doe</h2>
+
+            <div class="profile-details">
+                <!-- Full Name -->
+                <div class="detail-item">
+                    <i class="fas fa-user detail-icon"></i>
+                    <div class="detail-text">
+                        <span class="detail-label">Full Name</span>
+                        <span class="detail-value">John Doe</span>
+                    </div>
+                </div>
+                <!-- Email -->
+                <div class="detail-item">
+                    <i class="fas fa-envelope detail-icon"></i>
+                    <div class="detail-text">
+                        <span class="detail-label">Email</span>
+                        <span class="detail-value">john@example.com</span>
+                    </div>
+                </div>
+                <!-- E-Voucher Credits -->
+                <div class="detail-item">
+                    <i class="fas fa-dollar-sign detail-icon"></i>
+                    <div class="detail-text">
+                        <span class="detail-label">E-Voucher Credits</span>
+                        <span class="detail-value">0 credits</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <a href="#" class="action-button">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </a>
+                <a href="#" class="action-button">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </a>
+            </div>
+        </section> <!-- End .profile-card -->
+
+        <!-- CTA Card for Buying Vouchers -->
+        <section class="cta-card profile-cta">
+            <h3 class="cta-title">Need More E-Voucher Credits?</h3>
+            <p class="cta-description">Purchase e-vouchers to access premium features and services</p>
+            <a href="voucher.html" class="cta-purchase-button"> <!-- Link to voucher page -->
+                <i class="fas fa-dollar-sign"></i> Buy E-Vouchers
+            </a>
+        </section>
+
+    </div> <!-- End .container -->
+
+    <!-- ***** BOTTOM NAVIGATION ***** -->
+    <nav class="bottom-nav">
+         <a href="index.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+         <a href="profile.html" class="nav-item active"> <i class="fas fa-user"></i> <span>Profile</span> </a> <!-- Active -->
+         <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+         <a href="login.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login</span> </a>
+    </nav>
+    <!-- ***** END BOTTOM NAVIGATION ***** -->
+
+</body>
+</html>
