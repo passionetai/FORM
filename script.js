@@ -103,28 +103,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Attempt to sign up the user with Supabase Auth
                 const { data, error } = await supabase.auth.signUp({
                     email: email,
-                    password: password,
-                    // Optional: You can add metadata here later
-                    // options: {
-                    //   data: {
-                    //     first_name: firstNameInput.value.trim(),
-                    //     last_name: lastNameInput.value.trim()
-                    //   }
-                    // }
+                    password: password
                 });
 
                 if (error) {
-                    // If Supabase returns an error, show it
                     console.error('Signup Error:', error);
                     alert(`Signup failed: ${error.message}`);
-                } else if (data.user) {
-                    // If signup is successful (or needs confirmation)
-                    alert('Signup successful! Please check your email to confirm your account.'); // Modify if email confirmation is off
-                    // Redirect to the home page
-                    window.location.href = 'index.html';
-                } else {
-                     alert('Signup attempt completed, but no user data returned. Please check email or try again.');
+                    return;
                 }
+
+                // Check if signup succeeded
+                if (data?.user?.identities?.length === 0) {
+                    alert('User already registered. Please log in instead.');
+                    return;
+                }
+
+                // Successful signup
+                console.log('Signup successful:', data);
+                alert('Signup successful!');
+                
+                // Immediate redirect without waiting for email confirmation
+                window.location.href = 'index.html';
 
             } catch (catchError) {
                 // Catch any unexpected errors during the process
