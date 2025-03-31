@@ -41,14 +41,7 @@
                         <span class="detail-value">john@example.com</span>
                     </div>
                 </div>
-                <!-- E-Voucher Credits -->
-                <div class="detail-item">
-                    <i class="fas fa-dollar-sign detail-icon"></i>
-                    <div class="detail-text">
-                        <span class="detail-label">E-Voucher Credits</span>
-                        <span class="detail-value">0 credits</span>
-                    </div>
-                </div>
+                <!-- E-Voucher Credits item removed -->
             </div>
 
             <div class="profile-actions">
@@ -61,9 +54,127 @@
             </div>
         </section> <!-- End .profile-card -->
 
+        <!-- Wallet Section -->
+        <section class="wallet-section">
+            <h2>My Wallet</h2>
+
+            <!-- Balance Display -->
+            <div class="wallet-balance">
+                <span class="balance-label">Current Balance:</span>
+                <span class="balance-amount" id="wallet-current-balance">$0.00</span> <!-- Placeholder -->
+            </div>
+
+            <!-- Fund Wallet -->
+            <div class="fund-wallet">
+                <h3>Add Funds</h3>
+                <div class="funding-options">
+                    <!-- E-Voucher Purchase -->
+                    <div class="funding-option voucher-funding">
+                        <h4>Purchase E-Voucher</h4>
+                        <div class="form-group">
+                             <label for="voucher-amount">Amount ($):</label>
+                            <input type="number" id="voucher-amount" class="form-control" placeholder="e.g., 50" min="1">
+                        </div>
+                        <button id="open-voucher-modal-btn" class="btn btn-secondary">Fund with Voucher</button>
+                        <!-- Removed redirection paragraph -->
+                    </div>
+
+                    <!-- Crypto Deposit -->
+                    <div class="funding-option crypto-funding">
+                        <h4>Deposit Crypto</h4>
+                        <div class="form-group">
+                            <label for="crypto-select">Select Coin:</label>
+                            <select id="crypto-select" class="form-control">
+                                <option value="btc">Bitcoin (BTC)</option>
+                                <option value="eth">Ethereum (ETH)</option>
+                                <option value="usdt">Tether (USDT)</option>
+                                <!-- Add other supported cryptos -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="crypto-amount">Amount (Approx. USD):</label>
+                            <input type="number" id="crypto-amount" class="form-control" placeholder="e.g., 100" min="1">
+                            <button id="post-crypto-amount-btn" class="btn btn-secondary btn-small btn-outline" style="margin-top: 10px;">Post Amount</button> <!-- Added Post Amount button -->
+                        </div>
+                        <div class="crypto-deposit-details">
+                            <p>Send <span id="selected-crypto-name">Bitcoin</span> to the address below:</p>
+                            <div id="crypto-deposit-address" class="crypto-address-box">
+                                <!-- Placeholder Address -->
+                                bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh
+                            </div>
+                            <img id="crypto-qr-code" src="placeholder-qr.png" alt="Deposit QR Code" class="crypto-qr">
+                            <p class="crypto-warning">Ensure you send only <span id="selected-crypto-name-warn">Bitcoin</span> to this address. Sending other coins may result in loss of funds.</p>
+
+                            <!-- Confirmation Section -->
+                            <div class="form-group" style="margin-top: 20px; margin-bottom: 0;"> <!-- Added margin-top, removed default bottom margin -->
+                                <label for="crypto-txid">Transaction ID (Optional):</label>
+                                <input type="text" id="crypto-txid" class="form-control" placeholder="Enter Transaction ID / Hash">
+                            </div>
+                             <button id="confirm-crypto-sent-btn" class="btn btn-success" style="margin-top: 15px; width: 100%;">I Have Sent The Crypto</button> <!-- Added Confirmation button -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manual Payment Instructions -->
+                <div class="manual-funding-info funding-option"> <!-- Reusing funding-option for similar styling -->
+                    <h4>Manual Payment (WorldRemit / MTN MoMo)</h4>
+                    <p>To fund your wallet using WorldRemit or MTN Mobile Money, please follow these steps:</p>
+                    <ol>
+                        <li>Send payment to [Your WorldRemit/MTN Details Here - e.g., Name, Number, Country].</li>
+                        <li>Take a clear screenshot or note down the transaction reference number.</li>
+                        <li>Email the proof of payment (screenshot/reference) along with your registered email address to: <a href="mailto:support@dfyfx.com">support@dfyfx.com</a>.</li>
+                        <li>Your account will be credited manually by an admin upon verification (usually within 24 hours).</li>
+                    </ol>
+                    <p><strong>Note:</strong> Ensure all details are correct before sending payment.</p>
+                </div>
+
+            </div>
+
+            <!-- Transaction History -->
+            <div class="transaction-history">
+                <h3>Transaction History</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-history-body">
+                        <!-- Placeholder Transactions -->
+                        <tr>
+                            <td>2025-03-29</td>
+                            <td>Deposit</td>
+                            <td>E-Voucher Redeemed</td>
+                            <td class="amount-positive">+$50.00</td>
+                            <td class="status-completed">Completed</td>
+                        </tr>
+                        <tr>
+                            <td>2025-03-28</td>
+                            <td>Purchase</td>
+                            <td>Signal Subscription (1 Month)</td>
+                            <td class="amount-negative">-$25.00</td>
+                            <td class="status-completed">Completed</td>
+                        </tr>
+                         <tr>
+                            <td>2025-03-27</td>
+                            <td>Deposit</td>
+                            <td>Crypto Deposit (BTC)</td>
+                            <td class="amount-positive">+$100.00</td>
+                            <td class="status-pending">Pending (2/6 Conf)</td>
+                        </tr>
+                        <!-- More transactions loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section> <!-- End .wallet-section -->
+
         <!-- CTA Card for Buying Vouchers -->
         <section class="cta-card profile-cta">
-            <h3 class="cta-title">Need More E-Voucher Credits?</h3>
+            <h3 class="cta-title">Need More Credits?</h3> <!-- Updated CTA title -->
             <p class="cta-description">Purchase e-vouchers to access premium features and services</p>
             <a href="voucher.html" class="cta-purchase-button"> <!-- Link to voucher page -->
                 <i class="fas fa-dollar-sign"></i> Buy E-Vouchers
@@ -73,13 +184,271 @@
     </div> <!-- End .container -->
 
     <!-- ***** BOTTOM NAVIGATION ***** -->
-    <nav class="bottom-nav">
-         <a href="index.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+     <nav class="bottom-nav">
+         <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
          <a href="profile.html" class="nav-item active"> <i class="fas fa-user"></i> <span>Profile</span> </a> <!-- Active -->
          <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-         <a href="login.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login</span> </a>
+         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
     </nav>
     <!-- ***** END BOTTOM NAVIGATION ***** -->
 
+    <!-- Voucher Redemption Modal -->
+    <div id="voucher-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <button class="modal-close-btn" id="close-voucher-modal-btn">&times;</button>
+            <h2>Redeem E-Voucher</h2>
+            <p>Enter the code for your $<span id="voucher-modal-amount">0.00</span> voucher:</p>
+            <div class="form-group">
+                <label for="modal-voucher-code">Voucher Code:</label>
+                <input type="text" id="modal-voucher-code" class="form-control" placeholder="e.g., D123X">
+            </div>
+            <button id="modal-redeem-btn" class="btn btn-primary">Redeem Code</button>
+            <p id="modal-voucher-message" class="modal-message"></p>
+        </div>
+    </div>
+
+    <script>
+        // --- Wallet Section Script ---
+
+        // DOM Elements
+        const walletBalanceEl = document.getElementById('wallet-current-balance');
+        const voucherAmountInput = document.getElementById('voucher-amount'); // Changed from voucher-code
+        const purchaseVoucherBtn = document.getElementById('purchase-voucher-btn'); // Changed from redeem-voucher-btn
+        const cryptoSelect = document.getElementById('crypto-select');
+        const cryptoAmountInput = document.getElementById('crypto-amount'); // Added amount input
+        const postCryptoAmountBtn = document.getElementById('post-crypto-amount-btn'); // Added Post Amount button
+        const cryptoDepositAddressEl = document.getElementById('crypto-deposit-address');
+        const cryptoQrCodeEl = document.getElementById('crypto-qr-code');
+        const selectedCryptoNameEl = document.getElementById('selected-crypto-name');
+        const selectedCryptoNameWarnEl = document.getElementById('selected-crypto-name-warn');
+        const cryptoTxidInput = document.getElementById('crypto-txid'); // Added TxID input
+        const confirmCryptoSentBtn = document.getElementById('confirm-crypto-sent-btn'); // Added Confirm button
+        const transactionHistoryBody = document.getElementById('transaction-history-body');
+        // Modal Elements
+        const voucherModal = document.getElementById('voucher-modal');
+        const closeVoucherModalBtn = document.getElementById('close-voucher-modal-btn');
+        const voucherModalAmountEl = document.getElementById('voucher-modal-amount');
+        const modalVoucherCodeInput = document.getElementById('modal-voucher-code');
+        const modalRedeemBtn = document.getElementById('modal-redeem-btn');
+        const modalVoucherMessageEl = document.getElementById('modal-voucher-message');
+
+
+        // Placeholder Data (Replace with actual API calls)
+        const cryptoAddresses = {
+            btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', // Example BTC Address
+            eth: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B', // Example ETH Address
+            usdt: '0xdAC17F958D2ee523a2206206994597C13D831ec7'  // Example USDT (ERC20) Address
+        };
+        const cryptoQrCodes = {
+            btc: 'placeholder-qr-btc.png', // Replace with actual QR code paths/generation
+            eth: 'placeholder-qr-eth.png',
+            usdt: 'placeholder-qr-usdt.png'
+        };
+        const cryptoNames = {
+            btc: 'Bitcoin',
+            eth: 'Ethereum',
+            usdt: 'Tether (ERC20)'
+        };
+
+        // --- Functions ---
+
+        // Placeholder: Fetch and display balance
+        function fetchAndDisplayBalance() {
+            // Simulate API call
+            const currentBalance = 125.50; // Example fetched balance
+            if (walletBalanceEl) {
+                walletBalanceEl.textContent = `$${currentBalance.toFixed(2)}`;
+            }
+        }
+
+        // --- Modal Functions ---
+        function openVoucherModal() {
+            const amount = parseFloat(voucherAmountInput.value);
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid positive amount first.');
+                return;
+            }
+            if (voucherModalAmountEl) voucherModalAmountEl.textContent = amount.toFixed(2);
+            if (modalVoucherMessageEl) modalVoucherMessageEl.textContent = ''; // Clear previous messages
+            if (modalVoucherCodeInput) modalVoucherCodeInput.value = ''; // Clear previous code
+            if (voucherModal) voucherModal.style.display = 'flex'; // Show modal
+            // Add class after a short delay for transition effect
+            setTimeout(() => {
+                if (voucherModal) voucherModal.classList.add('active');
+            }, 10);
+        }
+
+        function closeVoucherModal() {
+             if (voucherModal) {
+                voucherModal.classList.remove('active');
+                 // Hide after transition ends
+                setTimeout(() => {
+                    voucherModal.style.display = 'none';
+                }, 300); // Match transition duration
+             }
+        }
+
+        // Placeholder: Handle redeeming the code from the modal
+        function redeemModalVoucherCode() {
+            const code = modalVoucherCodeInput.value.trim().toUpperCase(); // Ensure uppercase for validation
+            const amountText = voucherModalAmountEl.textContent; // Get amount from modal display
+            const amount = parseFloat(amountText);
+
+            // Basic validation (D + 3 digits + X)
+            const voucherRegex = /^D\d{3}X$/;
+            if (!voucherRegex.test(code)) {
+                 if (modalVoucherMessageEl) {
+                    modalVoucherMessageEl.textContent = 'Invalid voucher code format. (e.g., D123X)';
+                    modalVoucherMessageEl.className = 'modal-message error';
+                 }
+                return;
+            }
+
+            // Simulate API call to redeem
+            console.log(`Attempting to redeem voucher code: ${code} for amount: $${amount}`);
+             if (modalVoucherMessageEl) {
+                modalVoucherMessageEl.textContent = `Redeeming code ${code}...`;
+                modalVoucherMessageEl.className = 'modal-message'; // Reset style
+             }
+
+            // --- Simulate backend response ---
+            setTimeout(() => {
+                // Replace with actual backend call result
+                const isSuccess = true; // Math.random() > 0.3; // Simulate success/failure
+
+                if (isSuccess) {
+                     if (modalVoucherMessageEl) {
+                        modalVoucherMessageEl.textContent = `Successfully redeemed $${amountText}! Balance updated.`;
+                        modalVoucherMessageEl.className = 'modal-message success';
+                     }
+                    fetchAndDisplayBalance(); // Update balance display
+                    fetchAndDisplayHistory(); // Refresh history (placeholder)
+                    // Close modal after a delay
+                    setTimeout(closeVoucherModal, 1500);
+                } else {
+                     if (modalVoucherMessageEl) {
+                        modalVoucherMessageEl.textContent = 'Redemption failed. Invalid or used code.';
+                        modalVoucherMessageEl.className = 'modal-message error';
+                     }
+                }
+            }, 1000); // Simulate network delay
+        }
+
+
+        // Update Crypto Deposit UI based on selection
+        function updateCryptoDepositUI() {
+            const selectedCoin = cryptoSelect.value;
+            const address = cryptoAddresses[selectedCoin] || 'N/A';
+            const qrCodeSrc = cryptoQrCodes[selectedCoin] || 'placeholder-qr.png';
+            const coinName = cryptoNames[selectedCoin] || 'Selected Coin';
+
+            if (cryptoDepositAddressEl) cryptoDepositAddressEl.textContent = address;
+            if (cryptoQrCodeEl) cryptoQrCodeEl.src = qrCodeSrc;
+            if (selectedCryptoNameEl) selectedCryptoNameEl.textContent = coinName;
+            if (selectedCryptoNameWarnEl) selectedCryptoNameWarnEl.textContent = coinName;
+        }
+
+        // Placeholder: Handle posting the intended crypto deposit amount
+        function postCryptoAmount() {
+            const amount = parseFloat(cryptoAmountInput.value);
+            const selectedCoin = cryptoSelect.value;
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid positive amount for the crypto deposit.');
+                return;
+            }
+            // Simulate posting data to backend (e.g., Supabase)
+            console.log(`Posting intended crypto deposit: Amount=${amount}, Coin=${selectedCoin}`);
+            alert(`Amount $${amount.toFixed(2)} for ${cryptoNames[selectedCoin]} posted. Please proceed with sending the crypto. (Backend logic needed)`);
+            // TODO: Add actual API call to Supabase or backend
+        }
+
+        // Placeholder: Handle confirming crypto has been sent
+        function confirmCryptoSent() {
+            const selectedCoin = cryptoSelect.value;
+            const amount = parseFloat(cryptoAmountInput.value); // Get amount again or store it
+            const txid = cryptoTxidInput.value.trim();
+
+             if (isNaN(amount) || amount <= 0) {
+                // It might be better UX to disable the confirm button until amount is valid
+                alert('Please ensure a valid deposit amount is entered above.');
+                return;
+            }
+
+            // Simulate sending notification data to backend (e.g., Supabase)
+            console.log(`Confirming Crypto Sent: Coin=${selectedCoin}, Amount=${amount}, TxID=${txid || 'Not Provided'}`);
+            alert(`Thank you for confirming your deposit of $${amount.toFixed(2)} ${cryptoNames[selectedCoin]}. ${txid ? 'TxID: ' + txid + '.' : ''} Admin will verify the transaction shortly. (Backend logic needed)`);
+
+            // Optionally clear inputs or give further UI feedback
+            // cryptoAmountInput.value = '';
+            // cryptoTxidInput.value = '';
+        }
+
+
+        // Placeholder: Fetch and display transaction history
+        function fetchAndDisplayHistory() {
+            // In a real app, fetch data from API and generate rows dynamically
+            console.log("Fetching transaction history... (Using placeholder data)");
+            // The existing HTML rows serve as placeholders for now.
+            // TODO: Clear existing rows (if any) and populate with fetched data
+            // Example dynamic row creation (if needed later):
+            /*
+            const transactions = [ ... fetched data ... ];
+            transactionHistoryBody.innerHTML = ''; // Clear placeholders
+            transactions.forEach(tx => {
+                const row = transactionHistoryBody.insertRow();
+                row.innerHTML = `
+                    <td>${tx.date}</td>
+                    <td>${tx.type}</td>
+                    <td>${tx.description}</td>
+                    <td class="${tx.amount > 0 ? 'amount-positive' : 'amount-negative'}">${tx.amount > 0 ? '+' : ''}$${Math.abs(tx.amount).toFixed(2)}</td>
+                    <td class="status-${tx.status.toLowerCase()}">${tx.status}</td>
+                `;
+            });
+            */
+        }
+
+        // --- Event Listeners ---
+        const openVoucherModalBtn = document.getElementById('open-voucher-modal-btn'); // Get the correct button ID
+        if (openVoucherModalBtn) {
+            // Note: The purchaseVoucherBtn variable might still exist from previous steps but refers to the old button ID.
+            // We use the new variable openVoucherModalBtn here.
+            openVoucherModalBtn.addEventListener('click', openVoucherModal); // Call open modal function
+        }
+        if (closeVoucherModalBtn) {
+            closeVoucherModalBtn.addEventListener('click', closeVoucherModal);
+        }
+        if (modalRedeemBtn) {
+            modalRedeemBtn.addEventListener('click', redeemModalVoucherCode);
+        }
+        // Close modal if clicking outside the container
+        if (voucherModal) {
+            voucherModal.addEventListener('click', (event) => {
+                if (event.target === voucherModal) { // Check if click is on the overlay itself
+                    closeVoucherModal();
+                }
+            });
+        }
+
+        if (cryptoSelect) {
+            cryptoSelect.addEventListener('change', updateCryptoDepositUI);
+        }
+        if (postCryptoAmountBtn) { // Added listener for Post Amount button
+            postCryptoAmountBtn.addEventListener('click', postCryptoAmount);
+        }
+        if (confirmCryptoSentBtn) { // Added listener for Confirm Sent button
+            confirmCryptoSentBtn.addEventListener('click', confirmCryptoSent);
+        }
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAndDisplayBalance();
+            updateCryptoDepositUI(); // Set initial crypto UI
+            fetchAndDisplayHistory(); // Load history (currently uses placeholders)
+        });
+
+    </script>
 </body>
 </html>

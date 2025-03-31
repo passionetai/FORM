@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Trading - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container copy-trading-page">
+        <header class="page-header">
+            <h1>Done-For-You Copy Trading</h1>
+            <p>Let our expert traders manage your account.</p>
+        </header>
+
+        <section class="service-description card-style"> <!-- Reusing card style -->
+            <h2>About the Service</h2>
+            <p>Our Done-For-You Copy Trading service allows you to automatically copy the trades of our professional traders directly into your account. This is ideal for users who want exposure to the forex market without needing to trade themselves.</p>
+            <p><strong>Requirements:</strong></p>
+            <ul>
+                <li>One-time Contract Fee: $37 (deducted from your wallet credits)</li>
+                <li>Completed KYC Verification (link to KYC page - TBD)</li>
+                <li>Minimum Trading Capital (details provided after contract purchase)</li>
+                <li>Account setup managed by DfyFx Admin</li>
+            </ul>
+        </section>
+
+        <section class="contract-purchase card-style">
+             <h2>Step 1: Purchase Contract</h2>
+             <p>To begin, purchase the one-time service contract below. The cost will be deducted from your available wallet credits.</p>
+             <div class="current-balance-display">
+                 Your current wallet balance: <strong id="copy-trading-wallet-balance">$0.00</strong> <!-- Placeholder -->
+             </div>
+             <button id="purchase-contract-btn" class="btn btn-primary">Purchase Contract ($37)</button>
+             <p id="purchase-message" class="message-area"></p> <!-- For success/error messages -->
+        </section>
+
+        <!-- Placeholder for next steps (KYC, Capital, etc.) - to be shown after contract purchase -->
+        <section id="next-steps-section" class="card-style" style="display: none;">
+             <h2>Next Steps</h2>
+             <p>Contract purchased successfully! Please proceed with the following:</p>
+             <ul>
+                <li>Complete KYC Verification: <a href="#">Go to KYC</a></li>
+                <li>Prepare Minimum Capital: Details will be sent via email.</li>
+                <li>Await Admin Contact: Our team will reach out for account setup.</li>
+             </ul>
+             <p class="admin-update-notice"><strong>Important:</strong> Our team will now set up your dedicated trading account (requires minimum $500 capital, funded separately). This process takes 24-72 hours after KYC approval.</p>
+        </section>
+
+    </div> <!-- End .container -->
+
+    <!-- Placeholder for Bottom Navigation -->
+     <nav class="bottom-nav">
+         <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+         <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
+         <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+         <a href="copy_trading.html" class="nav-item active"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a> <!-- Active -->
+         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+    </nav>
+
+    <script>
+        // --- Copy Trading Script ---
+        const purchaseBtn = document.getElementById('purchase-contract-btn');
+        const balanceDisplay = document.getElementById('copy-trading-wallet-balance');
+        const purchaseMessage = document.getElementById('purchase-message');
+        const nextStepsSection = document.getElementById('next-steps-section');
+        const contractCost = 37; // Contract cost in $
+
+        // Placeholder: Fetch user's current balance
+        function fetchCurrentUserBalance() {
+            // Simulate API call
+            return 125.50; // Example balance
+        }
+
+        function displayBalance() {
+             const balance = fetchCurrentUserBalance();
+             if (balanceDisplay) {
+                 balanceDisplay.textContent = `$${balance.toFixed(2)}`;
+             }
+             // Enable/disable button based on balance
+             if (purchaseBtn) {
+                 purchaseBtn.disabled = balance < contractCost;
+                 if (balance < contractCost) {
+                     purchaseMessage.textContent = 'Insufficient balance to purchase contract.';
+                     purchaseMessage.style.color = 'red';
+                 } else {
+                      purchaseMessage.textContent = ''; // Clear message if balance is sufficient
+                 }
+             }
+        }
+
+        // Placeholder: Handle contract purchase
+        function purchaseContract() {
+            const currentBalance = fetchCurrentUserBalance();
+            if (currentBalance >= contractCost) {
+                // Simulate deducting credits and backend update
+                console.log(`Deducting ${contractCost} credits...`);
+                const newBalance = currentBalance - contractCost;
+
+                // Simulate success
+                alert(`Contract purchased successfully! $${contractCost} deducted.`);
+                if (balanceDisplay) balanceDisplay.textContent = `$${newBalance.toFixed(2)}`; // Update displayed balance
+                if (purchaseMessage) {
+                    purchaseMessage.textContent = 'Contract purchased successfully!';
+                    purchaseMessage.style.color = 'green';
+                }
+                if (purchaseBtn) purchaseBtn.disabled = true; // Disable after purchase
+                if (nextStepsSection) nextStepsSection.style.display = 'block'; // Show next steps
+
+                // TODO: Add actual API call to deduct credits and record purchase
+            } else {
+                alert('Error: Insufficient balance.');
+                 if (purchaseMessage) {
+                    purchaseMessage.textContent = 'Insufficient balance.';
+                    purchaseMessage.style.color = 'red';
+                 }
+            }
+        }
+
+        // Event Listeners
+        if (purchaseBtn) {
+            purchaseBtn.addEventListener('click', purchaseContract);
+        }
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayBalance();
+        });
+
+    </script>
+
+</body>
+</html>

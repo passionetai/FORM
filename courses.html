@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclasses & Courses - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container courses-page">
+        <header class="page-header">
+            <h1>Masterclasses & Courses</h1>
+            <p>Enhance your trading skills with our expert-led courses.</p>
+        </header>
+
+        <section class="current-status card-style"> <!-- Reusing status card style -->
+             <h2>Your Wallet</h2>
+             <div class="current-balance-display">
+                 Your current wallet balance: <strong id="courses-wallet-balance">$0.00</strong> <!-- Placeholder -->
+             </div>
+             <p id="purchase-message" class="message-area"></p> <!-- For success/error messages -->
+        </section>
+
+        <section class="course-list">
+            <h2>Available Courses</h2>
+            <div class="courses-grid">
+                <!-- Course 1 Placeholder -->
+                <div class="course-card card-style">
+                    <img src="placeholder-course1.jpg" alt="Forex Basics Thumbnail" class="course-thumbnail">
+                    <div class="course-content">
+                        <h3>Forex Trading Basics</h3>
+                        <p class="course-description">Understand the fundamentals of the forex market, terminology, and basic chart analysis.</p>
+                        <p class="course-cost">Cost: <strong>50 Credits</strong></p>
+                        <button class="btn btn-primary purchase-course-btn" data-course-id="FX101" data-cost="50">Purchase Course</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 Placeholder -->
+                <div class="course-card card-style">
+                    <img src="placeholder-course2.jpg" alt="Advanced Strategies Thumbnail" class="course-thumbnail">
+                     <div class="course-content">
+                        <h3>Advanced Technical Analysis</h3>
+                        <p class="course-description">Dive deep into indicators, chart patterns, and advanced strategies for identifying trading opportunities.</p>
+                        <p class="course-cost">Cost: <strong>150 Credits</strong></p>
+                        <button class="btn btn-primary purchase-course-btn" data-course-id="FX201" data-cost="150">Purchase Course</button>
+                    </div>
+                </div>
+
+                 <!-- Course 3 Placeholder -->
+                <div class="course-card card-style">
+                    <img src="placeholder-course3.jpg" alt="Risk Management Thumbnail" class="course-thumbnail">
+                     <div class="course-content">
+                        <h3>Risk Management Masterclass</h3>
+                        <p class="course-description">Learn essential techniques to manage risk, protect your capital, and trade sustainably.</p>
+                        <p class="course-cost">Cost: <strong>100 Credits</strong></p>
+                        <button class="btn btn-primary purchase-course-btn" data-course-id="RM301" data-cost="100">Purchase Course</button>
+                    </div>
+                </div>
+                <!-- Add more courses as needed -->
+            </div>
+        </section>
+
+    </div> <!-- End .container -->
+
+    <!-- Placeholder for Bottom Navigation -->
+     <nav class="bottom-nav">
+         <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+         <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
+         <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+         <a href="courses.html" class="nav-item active"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a> <!-- Active -->
+         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+    </nav>
+
+    <script>
+        // --- Courses Script ---
+        const balanceDisplay = document.getElementById('courses-wallet-balance');
+        const purchaseButtons = document.querySelectorAll('.purchase-course-btn');
+        const messageArea = document.getElementById('purchase-message');
+
+        // Placeholder: Fetch user's current balance
+        function fetchCurrentUserBalance() {
+            // Simulate API call
+            return 125.50; // Example balance
+        }
+
+        function displayBalance() {
+             const balance = fetchCurrentUserBalance();
+             if (balanceDisplay) {
+                 balanceDisplay.textContent = `$${balance.toFixed(2)}`;
+             }
+        }
+
+        // Placeholder: Handle course purchase
+        function purchaseCourse(event) {
+            const button = event.target;
+            const courseId = button.dataset.courseId;
+            const cost = parseInt(button.dataset.cost, 10);
+            const currentBalance = fetchCurrentUserBalance(); // Get current balance
+
+            if (currentBalance >= cost) {
+                // Simulate deducting credits and backend update
+                console.log(`Purchasing course ${courseId} for ${cost} credits...`);
+                const newBalance = currentBalance - cost;
+
+                // Simulate success
+                alert(`Successfully purchased course ${courseId}! ${cost} credits deducted.`);
+                if (balanceDisplay) balanceDisplay.textContent = `$${newBalance.toFixed(2)}`; // Update displayed balance
+                if (messageArea) {
+                    messageArea.textContent = `Course ${courseId} purchased!`;
+                    messageArea.style.color = 'var(--success-icon)';
+                }
+                button.disabled = true; // Disable button after purchase
+                button.textContent = 'Purchased';
+
+                // TODO: Add actual API call to deduct credits and record purchase/enrollment
+            } else {
+                alert('Error: Insufficient balance.');
+                 if (messageArea) {
+                    messageArea.textContent = 'Insufficient balance to purchase this course.';
+                    messageArea.style.color = 'var(--danger-icon)';
+                 }
+            }
+        }
+
+        // Event Listeners
+        purchaseButtons.forEach(button => {
+            button.addEventListener('click', purchaseCourse);
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayBalance();
+            // TODO: Check which courses user already owns and disable buttons accordingly
+        });
+
+    </script>
+
+</body>
+</html>

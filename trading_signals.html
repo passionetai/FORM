@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Signals Subscription - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container signals-page">
+        <header class="page-header">
+            <h1>Trading Signals Subscription</h1>
+            <p>Get access to our premium trading signals.</p>
+        </header>
+
+        <section class="current-status card-style">
+             <h2>Your Status</h2>
+             <p id="subscription-status">Status: <span class="status-inactive">Inactive</span></p>
+             <p id="subscription-expiry">Expires: N/A</p>
+             <div class="current-balance-display">
+                 Your current wallet balance: <strong id="signals-wallet-balance">$0.00</strong> <!-- Placeholder -->
+             </div>
+        </section>
+
+        <section class="subscription-options">
+            <h2>Choose Your Plan</h2>
+            <div class="options-grid">
+                <!-- 14-Day Tier -->
+                <div class="subscription-tier card-style">
+                    <h3>14-Day Access</h3>
+                    <p class="tier-cost">$30 <span class="credit-equivalent">(30 Credits)</span></p>
+                    <ul class="tier-features">
+                        <li>Full access to all signals</li>
+                        <li>Daily market insights</li>
+                        <li>Community access</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-tier="14" data-cost="30">Subscribe Now</button>
+                </div>
+
+                <!-- 30-Day Tier -->
+                <div class="subscription-tier card-style recommended"> <!-- Add 'recommended' class -->
+                     <span class="recommended-badge">Recommended</span>
+                    <h3>30-Day Access</h3>
+                    <p class="tier-cost">$50 <span class="credit-equivalent">(50 Credits)</span></p>
+                     <ul class="tier-features">
+                        <li>Full access to all signals</li>
+                        <li>Daily market insights</li>
+                        <li>Community access</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-tier="30" data-cost="50">Subscribe Now</button>
+                </div>
+
+                <!-- 90-Day Tier -->
+                <div class="subscription-tier card-style">
+                    <h3>90-Day Access</h3>
+                     <p class="tier-cost">$120 <span class="credit-equivalent">(120 Credits)</span></p>
+                     <ul class="tier-features">
+                        <li>Full access to all signals</li>
+                        <li>Daily market insights</li>
+                        <li>Community access</li>
+                        <li>Priority support</li>
+                        <li>Exclusive webinars</li>
+                    </ul>
+                    <button class="btn btn-primary subscribe-btn" data-tier="90" data-cost="120">Subscribe Now</button>
+                </div>
+            </div>
+             <p id="subscription-message" class="message-area"></p> <!-- For success/error messages -->
+        </section>
+
+    </div> <!-- End .container -->
+
+    <!-- Placeholder for Bottom Navigation -->
+     <nav class="bottom-nav">
+         <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+         <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
+         <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+         <a href="trading_signals.html" class="nav-item active"> <i class="fas fa-signal"></i> <span>Signals</span> </a> <!-- Active -->
+         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+    </nav>
+
+    <script>
+        // --- Trading Signals Script ---
+        const balanceDisplay = document.getElementById('signals-wallet-balance');
+        const subscribeButtons = document.querySelectorAll('.subscribe-btn');
+        const messageArea = document.getElementById('subscription-message');
+        const statusElement = document.getElementById('subscription-status');
+        const expiryElement = document.getElementById('subscription-expiry');
+
+        // Placeholder: Fetch user's current balance & subscription status
+        function fetchUserData() {
+            // Simulate API call
+            return {
+                balance: 125.50, // Example balance
+                subscriptionActive: false, // Example status
+                subscriptionExpiry: null // Example expiry
+            };
+        }
+
+        function displayUserData() {
+             const userData = fetchUserData();
+             if (balanceDisplay) {
+                 balanceDisplay.textContent = `$${userData.balance.toFixed(2)}`;
+             }
+             if (statusElement) {
+                 statusElement.innerHTML = `Status: <span class="status-${userData.subscriptionActive ? 'active' : 'inactive'}">${userData.subscriptionActive ? 'Active' : 'Inactive'}</span>`;
+             }
+              if (expiryElement) {
+                 expiryElement.textContent = `Expires: ${userData.subscriptionExpiry ? new Date(userData.subscriptionExpiry).toLocaleDateString() : 'N/A'}`;
+             }
+
+             // Disable buttons if balance is too low or already active? (Decide on logic)
+             // For now, just check balance against cost on click
+        }
+
+        // Placeholder: Handle subscription purchase
+        function handleSubscription(event) {
+            const button = event.target;
+            const tier = button.dataset.tier;
+            const cost = parseInt(button.dataset.cost, 10);
+            const userData = fetchUserData(); // Get current data again
+
+            if (userData.subscriptionActive) {
+                 alert('You already have an active subscription.');
+                 if (messageArea) messageArea.textContent = '';
+                 return;
+            }
+
+            if (userData.balance >= cost) {
+                // Simulate deducting credits and updating status
+                console.log(`Subscribing to ${tier}-Day tier for ${cost} credits...`);
+                const newBalance = userData.balance - cost;
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + parseInt(tier, 10));
+
+                // Simulate success
+                alert(`Successfully subscribed to ${tier}-Day Access! $${cost} deducted.`);
+                if (balanceDisplay) balanceDisplay.textContent = `$${newBalance.toFixed(2)}`;
+                if (statusElement) statusElement.innerHTML = `Status: <span class="status-active">Active</span>`;
+                if (expiryElement) expiryElement.textContent = `Expires: ${expiryDate.toLocaleDateString()}`;
+                if (messageArea) {
+                    messageArea.textContent = `Successfully subscribed!`;
+                    messageArea.style.color = 'var(--success-icon)'; // Use success color
+                }
+
+                // Disable all subscribe buttons after successful subscription
+                subscribeButtons.forEach(btn => btn.disabled = true);
+
+                // TODO: Add actual API call to deduct credits and update subscription status/expiry
+            } else {
+                alert('Error: Insufficient balance.');
+                 if (messageArea) {
+                    messageArea.textContent = 'Insufficient balance to subscribe to this tier.';
+                    messageArea.style.color = 'var(--danger-icon)'; // Use danger color
+                 }
+            }
+        }
+
+        // Event Listeners
+        subscribeButtons.forEach(button => {
+            button.addEventListener('click', handleSubscription);
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            displayUserData();
+        });
+
+    </script>
+
+</body>
+</html>

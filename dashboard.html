@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DfyFx Trader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="dashboard-header">
+        <h1>Dashboard</h1>
+        <div class="credit-balance">
+            <h2>Your Credit Balance</h2>
+            <p id="user-credit-balance">$0.00</p> <!-- Placeholder value -->
+        </div>
+    </header>
+
+    <main class="dashboard-content container"> <!-- Added container class for padding -->
+
+        <section class="welcome-card">
+            <h3>Welcome to DfyFx Trader!</h3>
+            <p>To start making money with DfyFx, you need to create your trading account immediately.</p>
+            <a href="#" class="btn welcome-cta-button">OPEN A TRADING ACCOUNT FREE <i class="fas fa-arrow-right"></i></a>
+        </section>
+
+        <section class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-grid">
+                <a href="ecard.html" class="action-item"> <!-- Link to voucher page for funding -->
+                    <i class="fas fa-wallet"></i>
+                    <span>Fund Wallet</span>
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-rss"></i>
+                    <span>Trading Signals</span>
+                </a>
+                 <a href="#" class="action-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Masterclasses</span>
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-copy"></i>
+                    <span>Copy Trading</span>
+                </a>
+                <a href="#" class="action-item">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                </a>
+                <a href="profile.html" class="action-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>User Profile</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="notifications">
+            <h2>Notifications</h2>
+            <div class="notification-list">
+                <div class="notification-item info">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="notification-content">
+                        <h4>System Maintenance Scheduled</h4>
+                        <p>Brief maintenance tonight at 2 AM UTC.</p>
+                        <span class="notification-time">2 hours ago</span>
+                    </div>
+                </div>
+                <div class="notification-item success">
+                    <i class="fas fa-check-circle"></i>
+                     <div class="notification-content">
+                        <h4>Wallet Funded Successfully</h4>
+                        <p>Your recent deposit of $50 has been added.</p>
+                        <span class="notification-time">1 day ago</span>
+                    </div>
+                </div>
+                 <div class="notification-item warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                     <div class="notification-content">
+                        <h4>Action Required: Verify Email</h4>
+                        <p>Please verify your email address to secure your account.</p>
+                        <span class="notification-time">3 days ago</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other dashboard content can go here -->
+        <p>Welcome to your dashboard!</p> <!-- This can be removed or kept as needed -->
+
+    </main>
+
+    <!-- ***** BOTTOM NAVIGATION ***** -->
+     <nav class="bottom-nav">
+         <a href="dashboard.html" class="nav-item active"> <i class="fas fa-home"></i> <span>Home</span> </a> <!-- Active -->
+         <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
+         <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+    </nav>
+    <!-- ***** END BOTTOM NAVIGATION ***** -->
+
+
+    <script src="script.js"></script>
+    <script>
+        // Placeholder function to update balance - replace with actual data fetching
+        function fetchAndUpdateBalance() {
+            // In a real app, you'd fetch this from a server/API
+            const currentBalance = 123.45; // Example balance
+            document.getElementById('user-credit-balance').textContent = `$${currentBalance.toFixed(2)}`;
+        }
+        fetchAndUpdateBalance(); // Call function on page load
+    </script>
+</body>
+</html>
