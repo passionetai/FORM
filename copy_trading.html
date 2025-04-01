@@ -57,12 +57,26 @@
          <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
          <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
          <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-         <a href="copy_trading.html" class="nav-item active"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a> <!-- Active -->
-         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
-         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
-         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+         
+         <!-- Hidden Items Container (Initially hidden on mobile) -->
+         <div id="more-menu-items" class="more-menu-items">
+            <a href="copy_trading.html" class="nav-item active"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a> <!-- Active -->
+            <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+            <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+            <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+         </div>
+         
+         <!-- More Button (Visible only on mobile) -->
+         <button id="more-menu-btn" class="nav-item more-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>More</span>
+         </button>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+    <script src="mobile-nav.js"></script>
     <script>
         // --- Copy Trading Script ---
         const purchaseBtn = document.getElementById('purchase-contract-btn');
@@ -71,54 +85,126 @@
         const nextStepsSection = document.getElementById('next-steps-section');
         const contractCost = 37; // Contract cost in $
 
-        // Placeholder: Fetch user's current balance
-        function fetchCurrentUserBalance() {
-            // Simulate API call
-            return 125.50; // Example balance
-        }
+        // Function to fetch balance from Supabase and update UI
+        async function displayBalance() {
+            console.log('Attempting to load balance for copy trading page...');
+            let balance = 0; // Default balance
 
-        function displayBalance() {
-             const balance = fetchCurrentUserBalance();
-             if (balanceDisplay) {
-                 balanceDisplay.textContent = `$${balance.toFixed(2)}`;
-             }
-             // Enable/disable button based on balance
-             if (purchaseBtn) {
-                 purchaseBtn.disabled = balance < contractCost;
-                 if (balance < contractCost) {
-                     purchaseMessage.textContent = 'Insufficient balance to purchase contract.';
-                     purchaseMessage.style.color = 'red';
-                 } else {
-                      purchaseMessage.textContent = ''; // Clear message if balance is sufficient
-                 }
-             }
-        }
-
-        // Placeholder: Handle contract purchase
-        function purchaseContract() {
-            const currentBalance = fetchCurrentUserBalance();
-            if (currentBalance >= contractCost) {
-                // Simulate deducting credits and backend update
-                console.log(`Deducting ${contractCost} credits...`);
-                const newBalance = currentBalance - contractCost;
-
-                // Simulate success
-                alert(`Contract purchased successfully! $${contractCost} deducted.`);
-                if (balanceDisplay) balanceDisplay.textContent = `$${newBalance.toFixed(2)}`; // Update displayed balance
-                if (purchaseMessage) {
-                    purchaseMessage.textContent = 'Contract purchased successfully!';
-                    purchaseMessage.style.color = 'green';
+            try {
+                // Ensure Supabase client is available
+                if (typeof supabaseClient === 'undefined') {
+                    throw new Error('Supabase client (supabaseClient) is not defined.');
                 }
-                if (purchaseBtn) purchaseBtn.disabled = true; // Disable after purchase
-                if (nextStepsSection) nextStepsSection.style.display = 'block'; // Show next steps
 
-                // TODO: Add actual API call to deduct credits and record purchase
-            } else {
-                alert('Error: Insufficient balance.');
-                 if (purchaseMessage) {
-                    purchaseMessage.textContent = 'Insufficient balance.';
+                // Get authenticated user
+                const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+                if (authError || !user) {
+                    // If not logged in, maybe redirect or just show $0.00 / disable button
+                    console.error('User not logged in for copy trading page.');
+                    // Optionally redirect: window.location.href = 'signup.html';
+                    // For now, we'll proceed assuming balance is 0 if not logged in
+                } else {
+                    console.log('Copy Trading: User found:', user.id);
+                    // Fetch balance from profiles table
+                    const { data: profileData, error: profileError } = await supabaseClient
+                        .from('profiles')
+                        .select('balance')
+                        .eq('id', user.id)
+                        .single();
+
+                    if (profileError && profileError.code !== 'PGRST116') { // Ignore 'row not found'
+                        throw profileError;
+                    }
+
+                    if (profileData?.balance !== undefined && profileData?.balance !== null) {
+                        balance = profileData.balance;
+                    }
+                    console.log('Copy Trading: Profile data fetched:', profileData);
+                }
+
+            } catch (error) {
+                console.error('Copy Trading: Error fetching balance:', error);
+                // Keep balance at 0 in case of error
+            }
+
+            // Update balance display
+            if (balanceDisplay) {
+                balanceDisplay.textContent = `$${Number(balance).toFixed(2)}`;
+                console.log('Copy Trading: Updated balance display:', balanceDisplay.textContent);
+            }
+
+            // Enable/disable button based on fetched balance
+            if (purchaseBtn) {
+                purchaseBtn.disabled = balance < contractCost;
+                if (balance < contractCost) {
+                    if(purchaseMessage) { // Check if element exists before setting properties
+                        purchaseMessage.textContent = 'Insufficient balance to purchase contract.';
+                        purchaseMessage.style.color = 'red';
+                    }
+                } else {
+                     if(purchaseMessage) purchaseMessage.textContent = ''; // Clear message
+                }
+            }
+        }
+
+        // Handle contract purchase by calling the Edge Function
+        async function purchaseContract() {
+            if (!purchaseBtn || !purchaseMessage || !balanceDisplay) return; // Should not happen
+
+            purchaseBtn.disabled = true;
+            purchaseMessage.textContent = 'Processing purchase...';
+            purchaseMessage.style.color = 'inherit'; // Reset color
+
+            try {
+                // Ensure Supabase client is available
+                if (typeof supabaseClient === 'undefined') {
+                    throw new Error('Supabase client is not defined.');
+                }
+
+                console.log('Invoking purchase-copy-contract Edge Function...');
+
+                // Call the Edge Function
+                // Note: No request body needed as the function gets user from auth context
+                const { data, error } = await supabaseClient.functions.invoke('purchase-copy-contract');
+
+                if (error) {
+                    // Handle specific errors returned by the function or generic invoke errors
+                    console.error('Edge Function invocation error:', error);
+                    // Try to parse Supabase Edge Function error details if available
+                    let errorMessage = error.message;
+                    if (error.context && error.context.json) {
+                         errorMessage = error.context.json.error || error.message;
+                    } else if (typeof error.details === 'string') {
+                         errorMessage = error.details;
+                    }
+                    throw new Error(errorMessage || 'Failed to process purchase.');
+                }
+
+                console.log('Edge Function response:', data);
+
+                // Handle success response from the function
+                if (data) {
+                    alert(data.message || 'Contract purchased successfully!'); // Show success message from function
+                    if (data.newBalance !== undefined && data.newBalance !== null) {
+                         balanceDisplay.textContent = `$${Number(data.newBalance).toFixed(2)}`; // Update balance display
+                    }
+                    purchaseMessage.textContent = data.message || 'Contract purchased successfully!';
+                    purchaseMessage.style.color = 'green';
+                    if (nextStepsSection) nextStepsSection.style.display = 'block'; // Show next steps
+                    // Keep button disabled after successful purchase
+                } else {
+                     // Handle unexpected success response without data
+                     throw new Error('Purchase completed but no confirmation data received.');
+                }
+
+            } catch (error) {
+                console.error('Error during purchaseContract:', error);
+                alert(`Error: ${error.message}`); // Show specific error to user
+                if (purchaseMessage) {
+                    purchaseMessage.textContent = `Error: ${error.message}`;
                     purchaseMessage.style.color = 'red';
-                 }
+                }
+                purchaseBtn.disabled = false; // Re-enable button on failure
             }
         }
 
@@ -129,7 +215,7 @@
 
         // Initial Load
         document.addEventListener('DOMContentLoaded', () => {
-            displayBalance();
+            displayBalance(); // Call the async function
         });
 
     </script>

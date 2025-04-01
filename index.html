@@ -11,21 +11,21 @@
 <body>
 
     <div class="container">
-        <header>
+        <header class="index-header"> <!-- Added class -->
             <!-- Header content -->
              <h1>DfyFx Trader</h1>
             <p>Your gateway to forex trading excellence</p>
         </header>
 
         <section class="crypto-market">
-             <h2>Crypto Market Prices</h2>
-             <!-- Crypto Cards -->
+            <h2>Live Crypto Market Prices</h2>
+                          <!-- Crypto Cards -->
              <div class="crypto-grid">
-                 <div class="crypto-card card-green"> <div class="crypto-info"> <i class="fab fa-bitcoin crypto-icon"></i> <div> <span class="crypto-name">Bitcoin</span> <span class="crypto-symbol">BTC</span> </div> </div> <div class="crypto-price"> <span class="price">$87,055</span> <span class="change positive"><i class="fas fa-arrow-up"></i> 0.52%</span> </div> </div>
-                 <div class="crypto-card card-green"> <div class="crypto-info"> <i class="fab fa-ethereum crypto-icon"></i> <div> <span class="crypto-name">Ethereum</span> <span class="crypto-symbol">ETH</span> </div> </div> <div class="crypto-price"> <span class="price">$2,020.57</span> <span class="change positive"><i class="fas fa-arrow-up"></i> 0.40%</span> </div> </div>
-                 <div class="crypto-card card-pink"> <div class="crypto-info"> <i class="fas fa-dollar-sign crypto-icon"></i> <div> <span class="crypto-name">Tether</span> <span class="crypto-symbol">USDT</span> </div> </div> <div class="crypto-price"> <span class="price">$1</span> <span class="change negative"><i class="fas fa-arrow-down"></i> 0.03%</span> </div> </div>
-                 <div class="crypto-card card-pink"> <div class="crypto-info"> <i class="fas fa-coins crypto-icon"></i> <div> <span class="crypto-name">XRP</span> <span class="crypto-symbol">XRP</span> </div> </div> <div class="crypto-price"> <span class="price">$2.35</span> <span class="change positive"><i class="fas fa-arrow-up"></i> 2.26%</span> </div> </div>
-                 <div class="crypto-card card-green"> <div class="crypto-info"> <i class="fas fa-cubes crypto-icon"></i> <div> <span class="crypto-name">BNB</span> <span class="crypto-symbol">BNB</span> </div> </div> <div class="crypto-price"> <span class="price">$637.85</span> <span class="change positive"><i class="fas fa-arrow-up"></i> 2.17%</span> </div> </div>
+                 <div class="crypto-card card-green" data-coin-id="bitcoin"> <div class="crypto-info"> <i class="fab fa-bitcoin crypto-icon"></i> <div> <span class="crypto-name">Bitcoin</span> <span class="crypto-symbol">BTC</span> </div> </div> <div class="crypto-price"> <span class="price">$...</span> <span class="change"><i class="fas fa-spinner fa-spin"></i> ...%</span> </div> </div>
+                 <div class="crypto-card card-green" data-coin-id="ethereum"> <div class="crypto-info"> <i class="fab fa-ethereum crypto-icon"></i> <div> <span class="crypto-name">Ethereum</span> <span class="crypto-symbol">ETH</span> </div> </div> <div class="crypto-price"> <span class="price">$...</span> <span class="change"><i class="fas fa-spinner fa-spin"></i> ...%</span> </div> </div>
+                 <div class="crypto-card card-pink" data-coin-id="tether"> <div class="crypto-info"> <i class="fas fa-dollar-sign crypto-icon"></i> <div> <span class="crypto-name">Tether</span> <span class="crypto-symbol">USDT</span> </div> </div> <div class="crypto-price"> <span class="price">$...</span> <span class="change"><i class="fas fa-spinner fa-spin"></i> ...%</span> </div> </div>
+                 <div class="crypto-card card-pink" data-coin-id="ripple"> <div class="crypto-info"> <i class="fas fa-coins crypto-icon"></i> <div> <span class="crypto-name">XRP</span> <span class="crypto-symbol">XRP</span> </div> </div> <div class="crypto-price"> <span class="price">$...</span> <span class="change"><i class="fas fa-spinner fa-spin"></i> ...%</span> </div> </div>
+                 <div class="crypto-card card-green" data-coin-id="binancecoin"> <div class="crypto-info"> <i class="fas fa-cubes crypto-icon"></i> <div> <span class="crypto-name">BNB</span> <span class="crypto-symbol">BNB</span> </div> </div> <div class="crypto-price"> <span class="price">$...</span> <span class="change"><i class="fas fa-spinner fa-spin"></i> ...%</span> </div> </div>
              </div>
         </section>
 
@@ -47,10 +47,20 @@
              <a href="dashboard.html" class="nav-item active"> <i class="fas fa-home"></i> <span>Home</span> </a> <!-- Link to dashboard, Active -->
              <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
              <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-             <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
-             <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
-             <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
-             <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder for dynamic Login/Logout -->
+             
+             <!-- Hidden Items Container (Initially hidden on mobile) -->
+             <div id="more-menu-items" class="more-menu-items">
+                <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+                <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+                <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+                <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+             </div>
+             
+             <!-- More Button (Visible only on mobile) -->
+             <button id="more-menu-btn" class="nav-item more-menu-btn">
+                <i class="fas fa-bars"></i>
+                <span>More</span>
+             </button>
         </nav>
         <!-- ***** END BOTTOM NAVIGATION ***** -->
 
@@ -67,5 +77,99 @@
 
     </div> <!-- End .container -->
 
+    <!-- Include mobile navigation script -->
+    <script src="mobile-nav.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+        // --- CoinGecko Price Fetching ---
+        const coinGeckoApiKey = 'CG-Fnp8DMZ9dstyzxvZjLzV6jzh'; // Your API Key
+        const coinIds = ['bitcoin', 'ethereum', 'tether', 'ripple', 'binancecoin']; // IDs from data-coin-id attributes
+        const vsCurrency = 'usd';
+
+        async function fetchCryptoPrices() {
+            console.log('Fetching crypto prices from CoinGecko...');
+            const idsParam = coinIds.join(',');
+            // Use the PRO endpoint if you have a paid key, otherwise use the public one
+            // const apiUrl = `https://pro-api.coingecko.com/api/v3/simple/price?ids=${idsParam}&vs_currencies=${vsCurrency}&include_24hr_change=true&x_cg_pro_api_key=${coinGeckoApiKey}`;
+            const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${idsParam}&vs_currencies=${vsCurrency}&include_24hr_change=true&x_cg_demo_api_key=${coinGeckoApiKey}`;
+
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                     // Attempt to read error body for more details
+                     let errorBody = null;
+                     try { errorBody = await response.json(); } catch (e) { /* Ignore if not JSON */ }
+                     console.error('CoinGecko API Response Error Body:', errorBody);
+                    throw new Error(`CoinGecko API error: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                console.log('CoinGecko data received:', data);
+                updateCryptoCards(data);
+            } catch (error) {
+                console.error('Error fetching CoinGecko prices:', error);
+                // Display error state on cards
+                updateCryptoCards(null, true); // Pass error flag
+            }
+        }
+
+        function updateCryptoCards(priceData, isError = false) {
+            const cryptoCards = document.querySelectorAll('.crypto-card');
+
+            cryptoCards.forEach(card => {
+                const coinId = card.dataset.coinId;
+                const priceEl = card.querySelector('.price');
+                const changeEl = card.querySelector('.change');
+                const coinData = priceData ? priceData[coinId] : null;
+
+                if (isError) {
+                    if(priceEl) priceEl.textContent = 'Error';
+                    if(changeEl) {
+                         changeEl.innerHTML = `<i class=\"fas fa-exclamation-triangle\"></i> ---%`;
+                         changeEl.className = 'change negative'; // Show error state
+                    }
+                } else if (coinData) {
+                    if (priceEl) {
+                        // Format price with commas and 2 decimal places
+                        priceEl.textContent = `$${coinData[vsCurrency].toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    }
+
+                    if (changeEl) {
+                        const change = coinData[`${vsCurrency}_24h_change`];
+                        if (change !== undefined && change !== null) {
+                            const formattedChange = change.toFixed(2);
+                            const iconClass = change >= 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down';
+                            const changeClass = change >= 0 ? 'positive' : 'negative';
+
+                            changeEl.innerHTML = `<i class=\"${iconClass}\"></i> ${formattedChange}%`;
+                            changeEl.className = `change ${changeClass}`; // Update class for color
+                        } else {
+                             changeEl.innerHTML = `<i class=\"fas fa-minus\"></i> ---%`; // Handle missing change data
+                             changeEl.className = 'change';
+                        }
+                    }
+                } else {
+                    console.warn(`No price data found for coin ID: ${coinId}`);
+                    // Keep loading indicator or show N/A
+                    if(priceEl) priceEl.textContent = 'N/A';
+                    if(changeEl) {
+                         changeEl.innerHTML = `<i class=\"fas fa-question-circle\"></i> N/A`;
+                         changeEl.className = 'change'; // Reset class
+                    }
+                }
+            });
+        }
+
+        // Fetch prices when the DOM is ready
+        document.addEventListener('DOMContentLoaded', fetchCryptoPrices);
+
+        // Optional: Refresh prices periodically (e.g., every 1-5 minutes)
+        // setInterval(fetchCryptoPrices, 1 * 60 * 1000); 
+
+    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>

@@ -27,6 +27,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    padding-bottom: 160px; /* Space for fixed nav (60px) + desired margin (100px) */
     line-height: 1.6;
     color: #333;
     background-color: #f8f9fa;
@@ -576,1035 +577,116 @@ body {
     padding-bottom: 60px; /* More inner spacing instead of nav spacing */
 }
 .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #ffffff;
-    padding: 8px 0 5px 0;
-    border-top: 1px solid #e9ecef;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Changed from space-around to space-between for better desktop spacing */
+    padding: 0 15px;
     z-index: 1000;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    height: 60px;
 }
 
-.nav-item {
+.bottom-nav .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: #868e96;
-    font-size: 0.75em;
-    font-weight: 500;
-    padding: 0 10px 5px 10px;
-    transition: color 0.2s ease;
-    position: relative;
+    color: var(--secondary-color-text);
+    font-size: 0.8rem;
+    padding: 10px 0;
     flex: 1;
     text-align: center;
+    transition: all 0.2s ease;
+    position: relative;
+    max-width: 120px; /* Added max-width for desktop view to prevent excessive spacing */
 }
 
-.nav-item i {
+.bottom-nav .nav-item i {
     font-size: 1.5em;
     margin-bottom: 4px;
     line-height: 1;
 }
 
-.nav-item.active {
+.bottom-nav .nav-item.active {
     color: #4a7dce;
     font-weight: 600;
 }
 
-/* ===== Crypto Card Enhancements ===== */
-.crypto-info div {
-    display: flex;
-    flex-direction: column;
-}
-
-.crypto-name {
-    font-weight: 600;
-    font-size: 0.95em;
-}
-
-.crypto-symbol {
-    font-size: 0.8em;
-    color: #6c757d;
-    text-transform: uppercase;
-}
-
-.crypto-price {
-    text-align: right;
-}
-
-.crypto-price .price {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 3px;
-}
-
-.crypto-price .change {
-    font-size: 0.85em;
-    font-weight: 500;
-}
-
-.crypto-price .change.positive {
-    color: #28a745;
-}
-
-.crypto-price .change.negative {
-    color: #dc3545;
-}
-
-/* ===== E-Voucher Page Styles ===== */
-.page-header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding-top: 20px;
-}
-
-.page-header h1 {
-    font-size: 1.8em;
-    margin-bottom: 5px;
-    color: #212529;
-    font-weight: 600;
-}
-
-.page-header p {
-    font-size: 1em;
-    color: #6c757d;
-}
-
-/* Tabs Styling */
-.tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 35px;
-    background-color: #f8f9fa;
-    border-radius: 12px;
-    padding: 6px;
-    max-width: 420px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e9ecef;
-}
-
-.tab-button {
-    flex: 1;
-    padding: 12px 20px;
-    border: none;
-    background-color: transparent;
-    color: #6c757d;
-    font-size: 1em;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    text-align: center;
-    position: relative;
-}
-
-.tab-button.active {
-    background-color: #ffffff;
-    color: #4361ee;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(67, 97, 238, 0.15);
-}
-
-.tab-button:not(.active):hover {
-    color: #4361ee;
-    background-color: rgba(67, 97, 238, 0.05);
-}
-
-.tab-button.active::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 3px;
-    background-color: #4361ee;
-    border-radius: 3px;
-}
-
-/* Pricing Plans */
-.pricing-plans {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 40px;
-    align-items: stretch;
-}
-
-.plan-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e9ecef;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.plan-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
-}
-
-.plan-card.recommended {
-    border: 2px solid #4a7dce;
-    box-shadow: 0 6px 20px rgba(74, 125, 206, 0.15);
-}
-
-.recommended-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #4a7dce;
-    color: #fff;
-    padding: 4px 18px;
-    font-size: 0.75em;
-    font-weight: 600;
-    border-bottom-left-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.plan-title {
-    font-size: 1.4em;
-    font-weight: 600;
-    color: #343a40;
-    margin-bottom: 5px;
-}
-
-.plan-duration {
-    font-size: 0.9em;
-    color: #868e96;
-    margin-bottom: 15px;
-}
-
-.plan-price {
-    font-size: 2.4em;
-    font-weight: 700;
-    color: #212529;
-    margin-bottom: 25px;
-}
-
-.features {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 30px 0;
-    flex-grow: 1;
-}
-
-.features li {
-    display: flex;
-    align-items: center;
-    font-size: 0.95em;
-    color: #495057;
-    margin-bottom: 12px;
-}
-
-.feature-icon {
-    color: #4a7dce;
-    margin-right: 10px;
-    font-size: 1.1em;
-}
-
-.purchase-button {
-    display: block;
-    background-color: #4a7dce;
-    color: #fff;
-    text-align: center;
-    padding: 12px 15px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1em;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.purchase-button:hover {
-    background-color: #3b6ab3;
-}
-
-.purchase-button:active {
-    transform: scale(0.98);
-}
-
-/* Payment Methods */
-.payment-methods-container {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 30px 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e9ecef;
-}
-
-.payment-methods-container h2 {
-    font-size: 1.3em;
-    font-weight: 600;
-    color: #343a40;
-    margin-bottom: 8px;
-}
-
-.payment-intro {
-    font-size: 0.95em;
-    color: #6c757d;
-    margin-bottom: 30px;
-}
-
-.payment-options-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.payment-option {
-    display: flex;
-    align-items: center;
-    background-color: #f8f9fa;
-    padding: 18px 20px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.payment-option:hover {
-    background-color: #f1f3f5;
-    border-color: #dee2e6;
-}
-
-.payment-icon {
-    font-size: 1.6em;
-    color: #4a7dce;
-    margin-right: 18px;
-    width: 30px;
-    text-align: center;
-}
-
-.payment-option-text h3 {
-    font-size: 1.05em;
-    font-weight: 600;
-    color: #343a40;
-    margin: 0 0 4px 0;
-}
-
-.payment-option-text p {
-    font-size: 0.9em;
-    color: #6c757d;
-    margin: 0;
-    line-height: 1.5;
-}
-
-.payment-note {
-    font-size: 0.85em;
-    color: #868e96;
-    text-align: center;
-    padding: 0 10px;
-    line-height: 1.6;
-}
-
-/* ===== Responsive Styles ===== */
-@media (max-width: 600px) {
-    .crypto-grid {
-        grid-template-columns: 1fr;
+/* Desktop specific adjustments */
+@media (min-width: 601px) {
+    .bottom-nav {
+        padding: 0 30px; /* Increased padding for desktop */
+        justify-content: center; /* Center items on desktop */
     }
-
-    .container {
-        padding: 15px;
+    
+    .bottom-nav .nav-item {
+        margin: 0 15px; /* Increased margin between items for better spacing */
+        flex: 0 1 auto; /* Don't stretch items on desktop */
+        padding: 10px 15px; /* Increased padding for better spacing */
+        min-width: 80px; /* Ensure minimum width for items */
     }
-
-    .form-container {
-        border-radius: 0;
+    
+    .more-menu-items {
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        display: flex !important;
+        justify-content: center;
+        width: auto !important; /* Ensure width is determined by content */
     }
+    
+    .more-menu-items .nav-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .more-menu-items .nav-item i {
+        margin-right: 0 !important; /* Reset any mobile specific margin */
+    }
+    
+    /* Add subtle hover effect for desktop */
+    .bottom-nav .nav-item:hover {
+        color: var(--primary);
+        transform: translateY(-2px);
+    }
+    
+    /* Enhance active indicator */
+    .bottom-nav .nav-item.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 3px;
+    }
+}
 
-    body {
+/* Override for desktop */
+@media (min-width: 601px) {
+    .more-menu-items {
+        display: flex !important;
+        position: static;
+        box-shadow: none;
+        background: transparent;
         padding: 0;
+        flex-direction: row;
+        width: auto;
     }
-}
-/* --- Login/Sign Up Page Styles --- */
-
-/* Optional: Style body if needed */
-.login-signup-body {
-    background-color: #f8f9fa; /* Ensure background consistency */
-    /* If content is short, ensure card is somewhat centered vertically */
-    /* display: flex;
-    flex-direction: column;
-    min-height: 100vh; */
-}
-
-/* Center the container more effectively if needed */
-.container.login-signup-page {
-    /* padding-top: 5vh; */ /* Adjust vertical positioning */
-     padding-bottom: 100px; /* More space above bottom nav */
-     max-width: 550px; /* Limit width for forms */
-}
-
-/* Main Access Card Styling */
-.access-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 30px 25px 35px 25px; /* Adjust padding */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
-    border: 1px solid #e9ecef;
-    margin-top: 20px; /* Space below main page header */
-}
-
-/* Card Header */
-.card-header {
-    text-align: center;
-    margin-bottom: 25px;
-}
-.card-header h2 {
-    font-size: 1.4em;
-    font-weight: 600;
-    color: #343a40;
-    margin-bottom: 5px;
-}
-.card-header p {
-    font-size: 0.95em;
-    color: #6c757d;
-    margin: 0;
-}
-
-/* Adjust tabs specifically for forms if needed */
-.tabs.form-tabs {
-    max-width: 100%; /* Allow tabs to fill card width */
-    margin-bottom: 30px;
-}
-/* Reuse .tab-button styles */
-
-/* Adjust tab content area */
-.tab-content-area.form-content-area {
-    margin-top: 0; /* Remove top margin if tabs are directly above */
-    margin-bottom: 0;
-}
-/* Reuse .tab-pane and .tab-pane.active */
-.tab-pane {
-    display: none; /* Hides panes by default */
-    /* other styles like opacity, animation */
-}
-
-.tab-pane.active {
-    display: block; /* Shows the pane with the active class */
-    /* other styles */
-}
-/* Form Styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px; /* Space between form elements/groups */
-}
-
-.form-group {
-    width: 100%;
-    position: relative; /* Needed for absolute positioning inside */
-}
-
-/* Row for side-by-side elements */
-.form-row {
-    display: flex;
-    gap: 15px; /* Space between items in the row */
-    width: 100%;
-}
-
-.form-group.half-width {
-    width: calc(50% - 7.5px); /* Adjust width considering the gap */
-}
-
-/* Label styling */
-label {
-    display: block;
-    font-size: 0.9em;
-    font-weight: 500;
-    color: #495057;
-    margin-bottom: 6px;
-}
-
-.label-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-}
-.label-row label {
-    margin-bottom: 0; /* Remove bottom margin when in a row */
-}
-
-
-/* Input Wrapper for Icon Positioning */
-.input-wrapper {
-    position: relative;
-}
-
-/* Input field styling */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 12px 15px; /* Adjust padding */
-    /* Add padding-right if icon is always visible/space needed */
-    padding-right: 40px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 0.95em;
-    color: #495057;
-    background-color: #fff; /* Ensure white background */
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-input[type="text"]::placeholder,
-input[type="email"]::placeholder,
-input[type="password"]::placeholder {
-    color: #adb5bd;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-    border-color: #4a7dce; /* Highlight border on focus */
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 0 2px rgba(74, 125, 206, 0.2); /* Subtle glow */
-}
-
-/* Error Icon Styling */
-.error-icon {
-    position: absolute;
-    top: 50%;
-    right: 12px; /* Position from the right */
-    transform: translateY(-50%);
-    color: #dc3545; /* Red color for error */
-    font-size: 1.1em;
-    display: inline-block; /* Initially show based on image */
-     /* display: none; */ /* Hide by default, show via JS/validation */
-}
-/* Hide icon if input is valid (example class) */
-/* input:valid + .error-icon { display: none; } */
-/* input:invalid + .error-icon { display: inline-block; } */
-
-
-/* Forgot Password Link */
-.forgot-password {
-    font-size: 0.8em;
-    color: #4a7dce;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-.forgot-password:hover {
-    color: #3b6ab3;
-    text-decoration: underline;
-}
-
-/* Submit Button Styling */
-.submit-button {
-    display: block;
-    width: 100%;
-    background-color: #4a7dce;
-    color: #fff;
-    text-align: center;
-    padding: 13px 15px; /* Slightly larger padding */
-    border-radius: 8px;
-    border: none; /* Remove default border */
-    font-weight: 600;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    margin-top: 10px; /* Extra space above button */
-}
-
-.submit-button:hover {
-    background-color: #3b6ab3;
-}
-
-.submit-button:active {
-    transform: scale(0.98);
-}
-
-/* Terms Text Styling */
-.terms-text {
-    font-size: 0.8em;
-    color: #868e96;
-    text-align: center;
-    margin-top: 25px; /* Space above terms */
-    line-height: 1.5;
-}
-.terms-text a {
-    color: #4a7dce;
-    text-decoration: none;
-    font-weight: 500;
-}
-.terms-text a:hover {
-    text-decoration: underline;
-}
-
-
-/* Responsive Adjustments for Forms */
-@media (max-width: 600px) {
-    .container.login-signup-page {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    .access-card {
-        padding: 25px 20px 30px 20px;
-    }
-    .form-row {
-        flex-direction: column; /* Stack name fields */
-        gap: 18px; /* Use form gap */
-    }
-    .form-group.half-width {
-        width: 100%; /* Full width when stacked */
-    }
-    .card-header h2 {
-        font-size: 1.3em;
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-        padding: 11px 15px;
-        padding-right: 35px; /* Adjust for icon */
-        font-size: 0.9em;
-    }
-    .submit-button {
-        padding: 12px 15px;
+    
+    .more-menu-btn {
+        display: none !important;
     }
 }
 
-/* --- End Login/Sign Up Page Styles --- */
-
-/* ===== Dashboard Styles ===== */
-.dashboard-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-    padding: 25px 20px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-header h1 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.credit-balance {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 15px 20px;
-    text-align: center;
-    backdrop-filter: blur(5px); /* Optional: Frosted glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.credit-balance h2 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 5px;
-    opacity: 0.9;
-}
-
-.credit-balance p {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-    color: #ffffff; /* Ensure high contrast */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.dashboard-content {
-    padding: 0 20px; /* Add padding to main content area */
-    margin-bottom: 30px; /* Add space below content before nav */
-}
-
-/* Welcome Card Section */
-.welcome-card {
-    background: linear-gradient(135deg, var(--primary-light), var(--primary));
-    color: white;
-    border-radius: 12px;
-    padding: 25px 20px;
-    margin-bottom: 30px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2), 0 0 0 0 rgba(67, 97, 238, 0.3); /* Initial glow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.welcome-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3), 0 0 20px 5px rgba(67, 97, 238, 0.4); /* Enhanced glow on hover */
-}
-
-.welcome-card h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.welcome-card p {
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    opacity: 0.9;
-    max-width: 600px; /* Limit text width */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.welcome-cta-button {
-    background: white;
-    color: var(--primary);
-    padding: 10px 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    width: auto; /* Override default btn width */
-    margin-top: 0; /* Override default btn margin */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.welcome-cta-button:hover {
-    background: #f0f0f0;
-    color: var(--secondary);
-    transform: translateY(-2px); /* Smaller lift than card */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
-}
-
-.welcome-cta-button i {
-    margin-left: 8px;
-}
-
-
-/* Quick Actions Section */
-.quick-actions {
-    margin-bottom: 30px;
-}
-
-.quick-actions h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 15px;
-}
-
-.action-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
-    gap: 15px;
-}
-
-.action-item {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px 15px;
-    text-align: center;
-    text-decoration: none;
-    color: var(--dark);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e9ecef;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.action-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    color: var(--primary);
-}
-
-.action-item i {
-    font-size: 1.8rem;
-    color: var(--primary);
-    margin-bottom: 10px;
-    transition: color 0.2s ease;
-}
-
-.action-item:hover i {
-    color: var(--secondary);
-}
-
-.action-item span {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-/* Notifications Section */
-.notifications {
-    margin-bottom: 30px;
-}
-
-.notifications h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 15px;
-}
-
-.notification-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.notification-item {
-    display: flex;
-    align-items: flex-start; /* Align icon to top */
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid; /* Border color set by type */
-    background-color: white; /* Default background */
-}
-
-.notification-item i {
-    font-size: 1.4rem;
-    margin-right: 15px;
-    margin-top: 2px; /* Align icon slightly better with text */
-    width: 25px; /* Fixed width for icon */
-    text-align: center;
-}
-
-.notification-content {
-    flex: 1;
-}
-
-.notification-content h4 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 5px 0;
-    color: var(--dark);
-}
-
-.notification-content p {
-    font-size: 0.9rem;
-    color: #495057;
-    margin: 0 0 8px 0;
-    line-height: 1.5;
-}
-
-.notification-time {
-    font-size: 0.8rem;
-    color: #868e96;
-}
-
-/* Notification Types */
-.notification-item.info {
-    background-color: var(--info-bg);
-    border-color: var(--info-border);
-}
-.notification-item.info i {
-    color: var(--info-icon);
-}
-
-.notification-item.success {
-    background-color: var(--success-bg);
-    border-color: var(--success-border);
-}
-.notification-item.success i {
-    color: var(--success-icon);
-}
-
-.notification-item.warning {
-    background-color: var(--warning-bg);
-    border-color: var(--warning-border);
-}
-.notification-item.warning i {
-    color: var(--warning-icon);
-}
-
-/* ===== Wallet Section Styles (Profile Page) ===== */
-.wallet-section {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 25px 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-}
-
-.wallet-section h2,
-.wallet-section h3 {
-    color: var(--dark);
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-.wallet-section h2 {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 25px;
-}
-.wallet-section h3 {
-    font-size: 1.2rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-/* Balance Display */
-.wallet-balance {
-    background: linear-gradient(135deg, #e0e3ff, #f8f9ff);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.balance-label {
-    display: block;
-    font-size: 1rem;
-    color: #6c757d;
-    margin-bottom: 5px;
-}
-
-.balance-amount {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-/* Fund Wallet Section */
-.fund-wallet {
-    margin-bottom: 30px;
-}
-
-.funding-options {
-    display: grid;
-    grid-template-columns: 1fr; /* Stack options by default */
-    gap: 30px;
-}
-
-/* Style individual funding boxes */
-.funding-option {
-    background-color: #f8f9ff;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #e0e3ff;
-    display: flex; /* Use flexbox for layout control */
-    flex-direction: column; /* Stack items vertically */
-    justify-content: space-between; /* Distribute space */
-}
-
-/* Ensure voucher funding aligns items normally */
-.funding-option.voucher-funding {
-    /* align-items: stretch; */ /* Default or center if preferred */
-}
-
-
-.funding-option h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--secondary);
-    margin-bottom: 15px;
-}
-
-.funding-option .form-group {
-    margin-bottom: 1rem; /* Adjust spacing */
-}
-.funding-option .form-control {
-    background-color: white; /* Ensure inputs are white */
-}
-.funding-option .btn {
-    margin-top: 0.5rem; /* Adjust button spacing */
-    width: 100%; /* Make button full width */
-    padding: 0.8rem 1.5rem; /* Adjust button padding */
-}
-
-/* Crypto Deposit Specifics */
-.crypto-deposit-details {
-    margin-top: 15px;
-}
-.crypto-deposit-details p {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-}
-.crypto-address-box {
-    background-color: #e9ecef;
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-family: monospace;
-    word-wrap: break-word;
-    margin-bottom: 15px;
-    border: 1px solid #ced4da;
-}
-.crypto-qr {
-    display: block;
-    max-width: 150px; /* Adjust size as needed */
-    height: auto;
-    margin: 10px auto 15px;
-    border: 1px solid #eee;
-}
-.crypto-warning {
-    font-size: 0.85rem;
-    color: #6c757d;
-}
-
-/* Transaction History */
-.transaction-history {
-    margin-top: 30px;
-}
-
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-}
-
-.history-table th,
-.history-table td {
-    padding: 12px 10px;
-    text-align: left;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.history-table th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    color: #495057;
-}
-
-.history-table tbody tr:hover {
-    background-color: #f1f3f5;
-}
-
-/* Amount and Status Styling */
-.amount-positive {
-    color: var(--success-icon);
-    font-weight: 500;
-}
-.amount-negative {
-    color: var(--danger-icon);
-    font-weight: 500;
-}
-
-.status-completed {
-    color: var(--success-icon);
-    font-weight: 500;
-}
-.status-pending {
-    color: var(--warning-icon);
-    font-weight: 500;
-}
-.status-failed {
-    color: var(--danger-icon);
-    font-weight: 500;
-}
-
-/* Responsive adjustments for funding options removed to keep sections stacked */
-/*
-@media (min-width: 768px) {
-    .funding-options {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-*/
+/* Responsive adjustments for funding options REMOVED to stack vertically */
 
 /* ===== Modal Styles ===== */
 .modal-overlay {
@@ -2030,4 +1112,1196 @@ input[type="password"]:focus {
 .course-content .btn {
     width: 100%;
     margin-top: auto; /* Push button to bottom */
+}
+
+/* ===== Wallet Section Styles (Profile Page) ===== */
+.wallet-section {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+.wallet-section h2,
+.wallet-section h3 {
+    color: var(--dark);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+.wallet-section h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.wallet-section h3 {
+    font-size: 1.2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Balance Display */
+.wallet-balance {
+    background: linear-gradient(135deg, #e0e3ff, #f8f9ff);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.balance-label {
+    display: block;
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.balance-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Fund Wallet Section */
+.fund-wallet {
+    margin-bottom: 30px;
+}
+
+.funding-options {
+    display: grid;
+    grid-template-columns: 1fr; /* Stack options by default */
+    gap: 30px;
+}
+
+/* Style individual funding boxes */
+.funding-option {
+    background-color: #f8f9ff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e0e3ff;
+    display: flex; /* Use flexbox for layout control */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: space-between; /* Distribute space */
+}
+
+/* Ensure voucher funding aligns items normally */
+.funding-option.voucher-funding {
+    /* align-items: stretch; */ /* Default or center if preferred */
+}
+
+
+.funding-option h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 15px;
+}
+
+.funding-option .form-group {
+    margin-bottom: 1rem; /* Adjust spacing */
+}
+.funding-option .form-control {
+    background-color: white; /* Ensure inputs are white */
+}
+.funding-option .btn {
+    margin-top: 0.5rem; /* Adjust button spacing */
+    width: 100%; /* Make button full width */
+    padding: 0.8rem 1.5rem; /* Adjust button padding */
+}
+
+/* Crypto Deposit Specifics */
+.crypto-deposit-details {
+    margin-top: 15px;
+}
+.crypto-deposit-details p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+.crypto-address-box {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-family: monospace;
+    word-wrap: break-word;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+}
+.crypto-qr {
+    display: block;
+    max-width: 150px; /* Adjust size as needed */
+    height: auto;
+    margin: 10px auto 15px;
+    border: 1px solid #eee;
+}
+.crypto-warning {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Transaction History */
+.transaction-history {
+    margin-top: 30px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.history-table th,
+.history-table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.history-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.history-table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Amount and Status Styling */
+.amount-positive {
+    color: var(--success-icon);
+    font-weight: 500;
+}
+.amount-negative {
+    color: var(--danger-icon);
+    font-weight: 500;
+}
+
+.status-completed {
+    color: var(--success-icon);
+    font-weight: 500;
+}
+.status-pending {
+    color: var(--warning-icon);
+    font-weight: 500;
+}
+.status-failed {
+    color: var(--danger-icon);
+    font-weight: 500;
+}
+
+/* Responsive adjustments for funding options REMOVED to stack vertically */
+
+/* ===== Dashboard Styles ===== */
+.dashboard-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 25px 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.credit-balance {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 15px 20px;
+    text-align: center;
+    backdrop-filter: blur(5px); /* Optional: Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.credit-balance h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+.credit-balance p {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff; /* Ensure high contrast */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-content {
+    padding: 0 20px; /* Add padding to main content area */
+    margin-bottom: 30px; /* Add space below content before nav */
+}
+
+/* Welcome Card Section */
+.welcome-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    color: white;
+    border-radius: 12px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2), 0 0 0 0 rgba(67, 97, 238, 0.3); /* Initial glow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.welcome-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3), 0 0 20px 5px rgba(67, 97, 238, 0.4); /* Enhanced glow on hover */
+}
+
+.welcome-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.welcome-card p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    max-width: 600px; /* Limit text width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcome-cta-button {
+    background: white;
+    color: var(--primary);
+    padding: 10px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    width: auto; /* Override default btn width */
+    margin-top: 0; /* Override default btn margin */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-cta-button:hover {
+    background: #f0f0f0;
+    color: var(--secondary);
+    transform: translateY(-2px); /* Smaller lift than card */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+
+.welcome-cta-button i {
+    margin-left: 8px;
+}
+
+
+/* Quick Actions Section */
+.quick-actions {
+    margin-bottom: 30px;
+}
+
+.quick-actions h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 15px;
+}
+
+.action-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px 15px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--dark);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    color: var(--primary);
+}
+
+.action-item i {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+    transition: color 0.2s ease;
+}
+
+.action-item:hover i {
+    color: var(--secondary);
+}
+
+.action-item span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Notifications Section */
+.notifications {
+    margin-bottom: 30px;
+}
+
+.notifications h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 15px;
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start; /* Align icon to top */
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid; /* Border color set by type */
+    background-color: white; /* Default background */
+}
+
+.notification-item i {
+    font-size: 1.4rem;
+    margin-right: 15px;
+    margin-top: 2px; /* Align icon slightly better with text */
+    width: 25px; /* Fixed width for icon */
+    text-align: center;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    color: var(--dark);
+}
+
+.notification-content p {
+    font-size: 0.9rem;
+    color: #495057;
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    color: #868e96;
+}
+
+/* Notification Types */
+.notification-item.info {
+    background-color: var(--info-bg);
+    border-color: var(--info-border);
+}
+.notification-item.info i {
+    color: var(--info-icon);
+}
+
+.notification-item.success {
+    background-color: var(--success-bg);
+    border-color: var(--success-border);
+}
+.notification-item.success i {
+    color: var(--success-icon);
+}
+
+.notification-item.warning {
+    background-color: var(--warning-bg);
+    border-color: var(--warning-border);
+}
+.notification-item.warning i {
+    color: var(--warning-icon);
+}
+
+/* ===== E-Voucher Page Styles ===== */
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-top: 20px;
+}
+
+.page-header h1 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    color: #212529;
+    font-weight: 600;
+}
+
+.page-header p {
+    font-size: 1em;
+    color: #6c757d;
+}
+
+/* Tabs Styling */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 6px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    background-color: transparent;
+    color: #6c757d;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.tab-button.active {
+    background-color: #ffffff;
+    color: #4361ee;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(67, 97, 238, 0.15);
+}
+
+.tab-button:not(.active):hover {
+    color: #4361ee;
+    background-color: rgba(67, 97, 238, 0.05);
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background-color: #4361ee;
+    border-radius: 3px;
+}
+
+/* Pricing Plans */
+.pricing-plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+    align-items: stretch;
+}
+
+.plan-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+}
+
+.plan-card.recommended {
+    border: 2px solid #4a7dce;
+    box-shadow: 0 6px 20px rgba(74, 125, 206, 0.15);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #4a7dce;
+    color: #fff;
+    padding: 4px 18px;
+    font-size: 0.75em;
+    font-weight: 600;
+    border-bottom-left-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.plan-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 5px;
+}
+
+.plan-duration {
+    font-size: 0.9em;
+    color: #868e96;
+    margin-bottom: 15px;
+}
+
+.plan-price {
+    font-size: 2.4em;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 25px;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    flex-grow: 1;
+}
+
+.features li {
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+    color: #495057;
+    margin-bottom: 12px;
+}
+
+.feature-icon {
+    color: #4a7dce;
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+.purchase-button {
+    display: block;
+    background-color: #4a7dce;
+    color: #fff;
+    text-align: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.purchase-button:hover {
+    background-color: #3b6ab3;
+}
+
+.purchase-button:active {
+    transform: scale(0.98);
+}
+
+/* Payment Methods */
+.payment-methods-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e9ecef;
+}
+
+.payment-methods-container h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 8px;
+}
+
+.payment-intro {
+    font-size: 0.95em;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.payment-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 18px 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.payment-option:hover {
+    background-color: #f1f3f5;
+    border-color: #dee2e6;
+}
+
+.payment-icon {
+    font-size: 1.6em;
+    color: #4a7dce;
+    margin-right: 18px;
+    width: 30px;
+    text-align: center;
+}
+
+.payment-option-text h3 {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #343a40;
+    margin: 0 0 4px 0;
+}
+
+.payment-option-text p {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.payment-note {
+    font-size: 0.85em;
+    color: #868e96;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 1.6;
+}
+
+/* ===== Responsive Styles ===== */
+
+    .pricing-plans {
+        grid-template-columns: 1fr; /* Stack plan cards vertically */
+        gap: 20px; /* Adjust gap for vertical stacking */
+    }
+
+@media (max-width: 600px) {
+    .crypto-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .form-container {
+        border-radius: 0;
+    }
+
+    body {
+        padding: 0; /* Reset other padding */
+        padding-bottom: 160px; /* Space for fixed nav (60px) + desired margin (100px) */
+    }
+    
+    /* Mobile Navigation Optimization */
+    .bottom-nav {
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+        overflow: visible; /* Allow positioned children (popup menu) to show */
+        justify-content: space-around; /* Evenly space visible items */
+    }
+    
+    .bottom-nav .nav-item {
+        flex: 1 1 auto; /* Allow items to grow but maintain minimum size */
+        max-width: 25%; /* Limit width to ensure 4 items fit well */
+    }
+    
+    /* More menu button styling */
+    .more-menu-btn {
+        background: none;
+        border: none;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    /* Initially hide the expandable menu items */
+    .more-menu-items {
+        display: none;
+        position: absolute;
+        bottom: 70px;
+        right: 10px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        z-index: 1000;
+        width: auto;
+        flex-direction: column;
+        min-width: 150px;
+    }
+    
+    .more-menu-items.show { /* Use .show to match JS toggle */
+        display: flex;
+    }
+    
+    .more-menu-items .nav-item {
+        padding: 12px;
+        max-width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .more-menu-items .nav-item i {
+        margin-right: 10px;
+    }
+
+    /* On desktop, don't show the more button */
+    .more-menu-btn {
+        display: flex;
+    }
+}
+
+/* Override for desktop */
+@media (min-width: 601px) {
+    .more-menu-items {
+        display: flex !important;
+        position: static;
+        box-shadow: none;
+        background: transparent;
+        padding: 0;
+        flex-direction: row;
+        width: auto;
+    }
+    
+    .more-menu-btn {
+        display: none !important;
+    }
+}
+
+/* --- Login/Sign Up Page Styles --- */
+
+/* Optional: Style body if needed */
+.login-signup-body {
+    background-color: #f8f9fa; /* Ensure background consistency */
+    /* If content is short, ensure card is somewhat centered vertically */
+    /* display: flex;
+    flex-direction: column;
+    min-height: 100vh; */
+}
+
+/* Center the container more effectively if needed */
+.container.login-signup-page {
+    /* padding-top: 5vh; */ /* Adjust vertical positioning */
+     padding-bottom: 100px; /* More space above bottom nav */
+     max-width: 550px; /* Limit width for forms */
+}
+
+/* Main Access Card Styling */
+.access-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px 25px 35px 25px; /* Adjust padding */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e9ecef;
+    margin-top: 20px; /* Space below main page header */
+}
+
+/* Card Header */
+.card-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.card-header h2 {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 5px;
+}
+.card-header p {
+    font-size: 0.95em;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* Adjust tabs specifically for forms if needed */
+.tabs.form-tabs {
+    max-width: 100%; /* Allow tabs to fill card width */
+    margin-bottom: 30px;
+}
+/* Reuse .tab-button styles */
+
+/* Adjust tab content area */
+.tab-content-area.form-content-area {
+    margin-top: 0; /* Remove top margin if tabs are directly above */
+    margin-bottom: 0;
+}
+/* Reuse .tab-pane and .tab-pane.active */
+.tab-pane {
+    display: none; /* Hides panes by default */
+    /* other styles like opacity, animation */
+}
+
+.tab-pane.active {
+    display: block; /* Shows the pane with the active class */
+    /* other styles */
+}
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Space between form elements/groups */
+}
+
+.form-group {
+    width: 100%;
+    position: relative; /* Needed for absolute positioning inside */
+}
+
+/* Row for side-by-side elements */
+.form-row {
+    display: flex;
+    gap: 15px; /* Space between items in the row */
+    width: 100%;
+}
+
+.form-group.half-width {
+    width: calc(50% - 7.5px); /* Adjust width considering the gap */
+}
+
+/* Label styling */
+label {
+    display: block;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.label-row label {
+    margin-bottom: 0; /* Remove bottom margin when in a row */
+}
+
+
+/* Input Wrapper for Icon Positioning */
+.input-wrapper {
+    position: relative;
+}
+
+/* Input field styling */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px; /* Adjust padding */
+    /* Add padding-right if icon is always visible/space needed */
+    padding-right: 40px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 0.95em;
+    color: #495057;
+    background-color: #fff; /* Ensure white background */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: #adb5bd;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #4a7dce; /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 2px rgba(74, 125, 206, 0.2); /* Subtle glow */
+}
+
+/* Error Icon Styling */
+.error-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px; /* Position from the right */
+    transform: translateY(-50%);
+    color: #dc3545; /* Red color for error */
+    font-size: 1.1em;
+    display: inline-block; /* Initially show based on image */
+     /* display: none; */ /* Hide by default, show via JS/validation */
+}
+/* Hide icon if input is valid (example class) */
+/* input:valid + .error-icon { display: none; } */
+/* input:invalid + .error-icon { display: inline-block; } */
+
+
+/* Forgot Password Link */
+.forgot-password {
+    font-size: 0.8em;
+    color: #4a7dce;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.forgot-password:hover {
+    color: #3b6ab3;
+    text-decoration: underline;
+}
+
+/* Submit Button Styling */
+.submit-button {
+    display: block;
+    width: 100%;
+    background-color: #4a7dce;
+    color: #fff;
+    text-align: center;
+    padding: 13px 15px; /* Slightly larger padding */
+    border-radius: 8px;
+    border: none; /* Remove default border */
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 10px; /* Extra space above button */
+}
+
+.submit-button:hover {
+    background-color: #3b6ab3;
+}
+
+.submit-button:active {
+    transform: scale(0.98);
+}
+
+/* Terms Text Styling */
+.terms-text {
+    font-size: 0.8em;
+    color: #868e96;
+    text-align: center;
+    margin-top: 25px; /* Space above terms */
+    line-height: 1.5;
+}
+.terms-text a {
+    color: #4a7dce;
+    text-decoration: none;
+    font-weight: 500;
+}
+.terms-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive Adjustments for Forms */
+@media (max-width: 600px) {
+    .container.login-signup-page {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .access-card {
+        padding: 25px 20px 30px 20px;
+    }
+    .form-row {
+        flex-direction: column; /* Stack name fields */
+        gap: 18px; /* Use form gap */
+    }
+    .form-group.half-width {
+        width: 100%; /* Full width when stacked */
+    }
+    .card-header h2 {
+        font-size: 1.3em;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 11px 15px;
+        padding-right: 35px; /* Adjust for icon */
+        font-size: 0.9em;
+    }
+    .submit-button {
+        padding: 12px 15px;
+    }
+}
+
+/* --- End Login/Sign Up Page Styles --- */
+
+
+
+/* --- Transaction History Responsive & Styling --- */
+.transaction-history {
+    margin-top: 30px;
+    overflow-x: auto; /* Enable horizontal scroll on overflow */
+    -webkit-overflow-scrolling: touch; /* Smoother scrolling on iOS */
+    border: 1px solid var(--border-color, #e9ecef);
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f8f9ff, #ffffff); /* Subtle gradient */
+    padding: 0; /* Remove padding if any, apply to inner elements */
+}
+
+.transaction-history h3 {
+    padding: 15px 20px;
+    margin: 0;
+    border-bottom: 1px solid var(--border-color, #e9ecef);
+    font-size: 1.1rem;
+    color: var(--dark);
+}
+
+.history-table {
+    width: 100%;
+    min-width: 600px; /* Prevent table from collapsing too much, forces scroll */
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.history-table th,
+.history-table td {
+    padding: 12px 15px; /* Consistent padding */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color, #e0e3ff); /* Slightly softer border */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.history-table thead th {
+    background-color: rgba(248, 249, 255, 0.8); /* Slightly transparent header */
+    font-weight: 600;
+    color: var(--secondary);
+    position: sticky; /* Make header sticky during scroll */
+    top: 0;
+    z-index: 10;
+}
+
+.history-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.history-table tbody tr:hover {
+    background-color: rgba(67, 97, 238, 0.05); /* Subtle hover */
+}
+
+.history-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Keep existing status/amount colors */
+.amount-positive {
+    color: #28a745; /* Vibrant green */
+    font-weight: 500;
+}
+.amount-negative {
+    color: #dc3545; /* Vibrant red */
+    font-weight: 500;
+}
+.status-completed {
+    color: #28a745;
+    font-weight: 500;
+}
+.status-pending {
+    color: #ffc107; /* Vibrant yellow */
+    font-weight: 500;
+}
+.status-failed {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+
+
+/* --- Manual Funding Info Styling --- */
+.manual-funding-info {
+    margin-top: 30px; /* Add space above this section */
+    padding: 25px 20px; /* Ensure consistent padding */
+}
+
+.manual-funding-info ol {
+    padding-left: 25px; /* Indent ordered list */
+    margin-bottom: 15px;
+}
+
+.manual-funding-info li {
+    margin-bottom: 10px; /* Space out list items */
+    line-height: 1.6;
+}
+
+.manual-funding-info p strong {
+    color: var(--danger-icon); /* Highlight the note */
+}
+
+
+
+/* --- Index Page Header Styling --- */
+.index-header {
+    text-align: center; /* Center align all content within header */
+    padding: 40px 20px 30px; /* Add some vertical padding */
+    margin-bottom: 30px; /* Space below header */
+    /* Optional: Add a subtle background or border */
+    /* background-color: #f8f9fa; */
+    /* border-bottom: 1px solid #eee; */
+}
+
+.index-header h1 {
+    font-size: 2.8rem; /* Make title larger */
+    font-weight: 700; /* Bolder */
+    color: var(--primary, #4361ee); /* Use primary color */
+    margin-bottom: 10px;
+    line-height: 1.2;
+    /* Optional: Add text shadow or gradient */
+    /* text-shadow: 1px 1px 3px rgba(0,0,0,0.1); */
+}
+
+.index-header p {
+    font-size: 1.1rem; /* Make subtitle slightly larger */
+    color: var(--secondary-color-text, #6c757d); /* Use secondary text color */
+    margin-top: 0;
+    max-width: 600px; /* Prevent subtitle from being too wide */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .index-header h1 {
+        font-size: 2.2rem; /* Slightly smaller on mobile */
+    }
+    .index-header p {
+        font-size: 1rem;
+    }
+}
+
+
+
+/* --- Crypto Market Section Styling (Index Page) --- */
+.crypto-market {
+    margin-bottom: 30px; /* Add space below the whole section if needed */
+}
+
+.crypto-market h2 {
+    text-align: center; /* Center the title */
+    font-size: 1.5rem; /* Adjust size */
+    font-weight: 600;
+    color: var(--dark, #343a40);
+    margin-bottom: 25px; /* Add space below the title, above the cards */
+    padding-bottom: 10px; /* Add space below text before potential border */
+    /* Optional: Add a subtle border below */
+    /* border-bottom: 1px solid var(--border-color, #eee); */
+    /* Optional: Uppercase */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
 }

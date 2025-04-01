@@ -5,11 +5,33 @@ const supabaseUrl = 'https://uhukhyovftxdcqefhnpu.supabase.co'; // Paste your Pr
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVodWtoeW92ZnR4ZGNxZWZobnB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5NDAwOTUsImV4cCI6MjA1ODUxNjA5NX0.L18svnRNiM0p9MiFsBcjaeZ6A8jsCyYZiWEvPpBHv60'; // Paste your anon public key here
 
 // Create a single Supabase client for interacting with your database
-const supabase = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey); // Corrected variable name
+console.log('Supabase client initializing...');
 
+console.log('Supabase client created:', supabaseClient);
 // --- End Supabase Initialization ---
 
-// ... rest of your existing JavaScript code (like switchAuthTab, etc.) ...
+// --- Mobile Nav Menu Toggle Functionality ---
+function initMobileMenu() {
+    const moreMenuBtn = document.getElementById('more-menu-btn');
+    const moreMenuItems = document.getElementById('more-menu-items');
+    
+    if (moreMenuBtn && moreMenuItems) {
+        // Toggle menu on button click
+        moreMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moreMenuItems.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!moreMenuBtn.contains(e.target) && !moreMenuItems.contains(e.target)) {
+                moreMenuItems.classList.remove('active');
+            }
+        });
+    }
+}
+
 // Signup/Login Page Tab Functionality
 function switchAuthTab(evt, tabName) {
     evt.preventDefault();
@@ -72,11 +94,16 @@ document.addEventListener('DOMContentLoaded', function() {
          if(firstVoucherTabButton) firstVoucherTabButton.click();
     }
 
+    // Initialize mobile menu
+    initMobileMenu();
+
     // --- Signup Form Handling ---
     const signupForm = document.getElementById('signup-form');
 
+    console.log('Signup form found:', signupForm);
     if (signupForm) { // Check if the form exists on the current page
         signupForm.addEventListener('submit', async (event) => {
+            console.log('Signup form submitted');
             event.preventDefault(); // Stop the default browser form submission
 
             const emailInput = document.getElementById('signup-email');
@@ -101,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             try {
                 // Attempt to sign up the user with Supabase Auth
-                const { data, error } = await supabase.auth.signUp({
+                const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
                     password: password
                 });
@@ -138,8 +165,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Login Form Handling ---
     const loginForm = document.getElementById('login-form');
 
+    console.log('Login form found:', loginForm);
     if (loginForm) { // Check if the form exists
         loginForm.addEventListener('submit', async (event) => {
+            console.log('Login form submitted');
             event.preventDefault(); // Stop default submission
 
             const emailInput = document.getElementById('login-email');
@@ -155,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             try {
                 // Attempt to sign in the user
-                const { data, error } = await supabase.auth.signInWithPassword({
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password,
                 });

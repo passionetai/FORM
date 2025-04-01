@@ -29,7 +29,7 @@
             <div class="courses-grid">
                 <!-- Course 1 Placeholder -->
                 <div class="course-card card-style">
-                    <img src="placeholder-course1.jpg" alt="Forex Basics Thumbnail" class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Forex Basics Thumbnail" class="course-thumbnail">
                     <div class="course-content">
                         <h3>Forex Trading Basics</h3>
                         <p class="course-description">Understand the fundamentals of the forex market, terminology, and basic chart analysis.</p>
@@ -40,7 +40,7 @@
 
                 <!-- Course 2 Placeholder -->
                 <div class="course-card card-style">
-                    <img src="placeholder-course2.jpg" alt="Advanced Strategies Thumbnail" class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1640340434855-6084b1f4901c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Advanced Strategies Thumbnail" class="course-thumbnail">
                      <div class="course-content">
                         <h3>Advanced Technical Analysis</h3>
                         <p class="course-description">Dive deep into indicators, chart patterns, and advanced strategies for identifying trading opportunities.</p>
@@ -51,7 +51,7 @@
 
                  <!-- Course 3 Placeholder -->
                 <div class="course-card card-style">
-                    <img src="placeholder-course3.jpg" alt="Risk Management Thumbnail" class="course-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1559526324-c1f275fbfa32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" alt="Risk Management Thumbnail" class="course-thumbnail">
                      <div class="course-content">
                         <h3>Risk Management Masterclass</h3>
                         <p class="course-description">Learn essential techniques to manage risk, protect your capital, and trade sustainably.</p>
@@ -70,60 +70,143 @@
          <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
          <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
          <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
-         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
-         <a href="courses.html" class="nav-item active"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a> <!-- Active -->
-         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+         
+         <!-- Hidden Items Container (Initially hidden on mobile) -->
+         <div id="more-menu-items" class="more-menu-items">
+            <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+            <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+            <a href="courses.html" class="nav-item active"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a> <!-- Active -->
+            <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+         </div>
+         
+         <!-- More Button (Visible only on mobile) -->
+         <button id="more-menu-btn" class="nav-item more-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>More</span>
+         </button>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+    <script src="mobile-nav.js"></script>
     <script>
         // --- Courses Script ---
         const balanceDisplay = document.getElementById('courses-wallet-balance');
         const purchaseButtons = document.querySelectorAll('.purchase-course-btn');
-        const messageArea = document.getElementById('purchase-message');
+        const messageArea = document.getElementById('purchase-message'); // Assumes this ID exists for messages
 
-        // Placeholder: Fetch user's current balance
-        function fetchCurrentUserBalance() {
-            // Simulate API call
-            return 125.50; // Example balance
+        // Function to fetch balance and update UI
+        async function displayBalance() {
+            console.log('Attempting to load balance for courses page...');
+            let balance = 0;
+
+            try {
+                if (typeof supabaseClient === 'undefined') throw new Error('Supabase client not defined.');
+
+                const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+                if (authError || !user) {
+                    console.error('User not logged in for courses page.');
+                    // Handle not logged in - maybe disable purchase buttons?
+                    purchaseButtons.forEach(btn => btn.disabled = true);
+                } else {
+                    console.log('Courses Page: User found:', user.id);
+                    const { data: profileData, error: profileError } = await supabaseClient
+                        .from('profiles')
+                        .select('balance')
+                        .eq('id', user.id)
+                        .single();
+
+                    if (profileError && profileError.code !== 'PGRST116') throw profileError;
+
+                    if (profileData?.balance !== undefined && profileData?.balance !== null) {
+                        balance = profileData.balance;
+                    }
+                    console.log('Courses Page: Balance fetched:', balance);
+                }
+            } catch (error) {
+                console.error('Courses Page: Error fetching balance:', error);
+            }
+
+            // Update balance display
+            if (balanceDisplay) {
+                balanceDisplay.textContent = `$${Number(balance).toFixed(2)}`;
+            }
+
+            // TODO: Add logic here to fetch user's purchased courses from `user_courses`
+            //       and disable buttons for courses already owned.
         }
 
-        function displayBalance() {
-             const balance = fetchCurrentUserBalance();
-             if (balanceDisplay) {
-                 balanceDisplay.textContent = `$${balance.toFixed(2)}`;
-             }
-        }
+        // Handle course purchase by calling the Edge Function
+        async function purchaseCourse(event) {
+            const button = event.target.closest('.purchase-course-btn');
+            if (!button) return;
 
-        // Placeholder: Handle course purchase
-        function purchaseCourse(event) {
-            const button = event.target;
             const courseId = button.dataset.courseId;
             const cost = parseInt(button.dataset.cost, 10);
-            const currentBalance = fetchCurrentUserBalance(); // Get current balance
 
-            if (currentBalance >= cost) {
-                // Simulate deducting credits and backend update
-                console.log(`Purchasing course ${courseId} for ${cost} credits...`);
-                const newBalance = currentBalance - cost;
+            if (!courseId || isNaN(cost)) {
+                console.error('Button missing course ID or cost data');
+                return;
+            }
 
-                // Simulate success
-                alert(`Successfully purchased course ${courseId}! ${cost} credits deducted.`);
-                if (balanceDisplay) balanceDisplay.textContent = `$${newBalance.toFixed(2)}`; // Update displayed balance
-                if (messageArea) {
-                    messageArea.textContent = `Course ${courseId} purchased!`;
-                    messageArea.style.color = 'var(--success-icon)';
+            // Disable button and show processing message
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            if (messageArea) {
+                messageArea.textContent = `Purchasing ${courseId}...`;
+                messageArea.style.color = 'inherit';
+            }
+
+            try {
+                if (typeof supabaseClient === 'undefined') throw new Error('Supabase client not defined.');
+
+                console.log(`Invoking purchase-course Edge Function for ${courseId}, cost ${cost}...`);
+
+                const { data, error } = await supabaseClient.functions.invoke('purchase-course', {
+                    body: JSON.stringify({ course_id: courseId, cost: cost })
+                });
+
+                if (error) {
+                    console.error('Edge Function invocation error:', error);
+                    let errorMessage = error.message;
+                     if (error.context && error.context.json) {
+                         errorMessage = error.context.json.error || error.message;
+                    } else if (typeof error.details === 'string') {
+                         errorMessage = error.details;
+                    }
+                    throw new Error(errorMessage || 'Failed to process purchase.');
                 }
-                button.disabled = true; // Disable button after purchase
-                button.textContent = 'Purchased';
 
-                // TODO: Add actual API call to deduct credits and record purchase/enrollment
-            } else {
-                alert('Error: Insufficient balance.');
-                 if (messageArea) {
-                    messageArea.textContent = 'Insufficient balance to purchase this course.';
+                console.log('Edge Function response:', data);
+
+                if (data) {
+                    alert(data.message || `Successfully purchased ${courseId}!`);
+                    if (messageArea) {
+                        messageArea.textContent = data.message || `Successfully purchased ${courseId}!`;
+                        messageArea.style.color = 'var(--success-icon)';
+                    }
+                    // Update balance display with new balance from response
+                    if (data.newBalance !== undefined && data.newBalance !== null && balanceDisplay) {
+                         balanceDisplay.textContent = `$${Number(data.newBalance).toFixed(2)}`;
+                    }
+                    // Keep button disabled and change text to indicate purchase
+                    button.textContent = 'Purchased';
+                    // Note: Button remains disabled even after success in this version
+                } else {
+                     throw new Error('Purchase completed but no confirmation data received.');
+                }
+
+            } catch (error) {
+                console.error('Error during purchaseCourse:', error);
+                alert(`Error: ${error.message}`);
+                if (messageArea) {
+                    messageArea.textContent = `Error: ${error.message}`;
                     messageArea.style.color = 'var(--danger-icon)';
-                 }
+                }
+                // Re-enable button on failure
+                button.disabled = false;
+                button.textContent = 'Purchase Course';
             }
         }
 
@@ -135,7 +218,7 @@
         // Initial Load
         document.addEventListener('DOMContentLoaded', () => {
             displayBalance();
-            // TODO: Check which courses user already owns and disable buttons accordingly
+            // TODO: Add call here to fetch owned courses and update button states
         });
 
     </script>

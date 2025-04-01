@@ -78,12 +78,26 @@
          <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
          <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
          <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
-         <a href="trading_signals.html" class="nav-item active"> <i class="fas fa-signal"></i> <span>Signals</span> </a> <!-- Active -->
-         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
-         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+         
+         <!-- Hidden Items Container (Initially hidden on mobile) -->
+         <div id="more-menu-items" class="more-menu-items">
+            <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+            <a href="trading_signals.html" class="nav-item active"> <i class="fas fa-signal"></i> <span>Signals</span> </a> <!-- Active -->
+            <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+            <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+         </div>
+         
+         <!-- More Button (Visible only on mobile) -->
+         <button id="more-menu-btn" class="nav-item more-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>More</span>
+         </button>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+    <script src="mobile-nav.js"></script>
     <script>
         // --- Trading Signals Script ---
         const balanceDisplay = document.getElementById('signals-wallet-balance');
@@ -92,72 +106,165 @@
         const statusElement = document.getElementById('subscription-status');
         const expiryElement = document.getElementById('subscription-expiry');
 
-        // Placeholder: Fetch user's current balance & subscription status
-        function fetchUserData() {
-            // Simulate API call
-            return {
-                balance: 125.50, // Example balance
-                subscriptionActive: false, // Example status
-                subscriptionExpiry: null // Example expiry
-            };
-        }
+        // Function to fetch user data (balance, subscription) and update UI
+        async function displayUserData() {
+            console.log('Attempting to load user data for signals page...');
+            let balance = 0;
+            let subscriptionActive = false;
+            let subscriptionExpiry = null;
+            let subscriptionTier = null; // Added tier
 
-        function displayUserData() {
-             const userData = fetchUserData();
-             if (balanceDisplay) {
-                 balanceDisplay.textContent = `$${userData.balance.toFixed(2)}`;
-             }
-             if (statusElement) {
-                 statusElement.innerHTML = `Status: <span class="status-${userData.subscriptionActive ? 'active' : 'inactive'}">${userData.subscriptionActive ? 'Active' : 'Inactive'}</span>`;
-             }
-              if (expiryElement) {
-                 expiryElement.textContent = `Expires: ${userData.subscriptionExpiry ? new Date(userData.subscriptionExpiry).toLocaleDateString() : 'N/A'}`;
-             }
-
-             // Disable buttons if balance is too low or already active? (Decide on logic)
-             // For now, just check balance against cost on click
-        }
-
-        // Placeholder: Handle subscription purchase
-        function handleSubscription(event) {
-            const button = event.target;
-            const tier = button.dataset.tier;
-            const cost = parseInt(button.dataset.cost, 10);
-            const userData = fetchUserData(); // Get current data again
-
-            if (userData.subscriptionActive) {
-                 alert('You already have an active subscription.');
-                 if (messageArea) messageArea.textContent = '';
-                 return;
-            }
-
-            if (userData.balance >= cost) {
-                // Simulate deducting credits and updating status
-                console.log(`Subscribing to ${tier}-Day tier for ${cost} credits...`);
-                const newBalance = userData.balance - cost;
-                const expiryDate = new Date();
-                expiryDate.setDate(expiryDate.getDate() + parseInt(tier, 10));
-
-                // Simulate success
-                alert(`Successfully subscribed to ${tier}-Day Access! $${cost} deducted.`);
-                if (balanceDisplay) balanceDisplay.textContent = `$${newBalance.toFixed(2)}`;
-                if (statusElement) statusElement.innerHTML = `Status: <span class="status-active">Active</span>`;
-                if (expiryElement) expiryElement.textContent = `Expires: ${expiryDate.toLocaleDateString()}`;
-                if (messageArea) {
-                    messageArea.textContent = `Successfully subscribed!`;
-                    messageArea.style.color = 'var(--success-icon)'; // Use success color
+            try {
+                // Ensure Supabase client is available
+                if (typeof supabaseClient === 'undefined') {
+                    throw new Error('Supabase client (supabaseClient) is not defined.');
                 }
 
-                // Disable all subscribe buttons after successful subscription
-                subscribeButtons.forEach(btn => btn.disabled = true);
+                // Get authenticated user
+                const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+                if (authError || !user) {
+                    console.error('User not logged in for signals page.');
+                    // Handle not logged in state - redirect or show appropriate UI
+                    // window.location.href = 'signup.html'; // Example redirect
+                } else {
+                    console.log('Signals Page: User found:', user.id);
+                    // Fetch balance and subscription status from profiles table
+                    const { data: profileData, error: profileError } = await supabaseClient
+                        .from('profiles')
+                        .select('balance, subscription_tier, subscription_expires_at') // Fetch all needed columns
+                        .eq('id', user.id)
+                        .single();
 
-                // TODO: Add actual API call to deduct credits and update subscription status/expiry
-            } else {
-                alert('Error: Insufficient balance.');
-                 if (messageArea) {
-                    messageArea.textContent = 'Insufficient balance to subscribe to this tier.';
-                    messageArea.style.color = 'var(--danger-icon)'; // Use danger color
-                 }
+                    if (profileError && profileError.code !== 'PGRST116') { // Ignore 'row not found'
+                        throw profileError;
+                    }
+
+                    console.log('Signals Page: Profile data fetched:', profileData);
+
+                    if (profileData) {
+                        balance = profileData.balance ?? 0;
+                        subscriptionTier = profileData.subscription_tier; // Can be null
+                        subscriptionExpiry = profileData.subscription_expires_at; // Can be null
+
+                        // Determine if subscription is currently active
+                        if (subscriptionExpiry) {
+                            const expiryDate = new Date(subscriptionExpiry);
+                            if (expiryDate > new Date()) { // Check if expiry is in the future
+                                subscriptionActive = true;
+                            }
+                        }
+                    }
+                }
+
+            } catch (error) {
+                console.error('Signals Page: Error fetching user data:', error);
+                // Keep defaults in case of error, maybe show an error message
+            }
+
+            // Update balance display
+            if (balanceDisplay) {
+                balanceDisplay.textContent = `$${Number(balance).toFixed(2)}`;
+                console.log('Signals Page: Updated balance display:', balanceDisplay.textContent);
+            }
+
+            // Update Status Display
+             if (statusElement) {
+                 statusElement.innerHTML = `Status: <span class="status-${subscriptionActive ? 'active' : 'inactive'}">${subscriptionActive ? 'Active' : 'Inactive'} ${subscriptionTier ? '('+subscriptionTier+'-Day)' : ''}</span>`;
+             }
+              if (expiryElement) {
+                 expiryElement.textContent = `Expires: ${subscriptionExpiry ? new Date(subscriptionExpiry).toLocaleDateString() : 'N/A'}`;
+             }
+
+             // Disable buttons if already active or based on balance (logic moved to handleSubscription for click-time check)
+             if (subscriptionActive) {
+                 subscribeButtons.forEach(btn => btn.disabled = true);
+                 if(messageArea) messageArea.textContent = 'You have an active subscription.';
+             } else {
+                 // Re-enable buttons if needed (e.g., if they were disabled previously)
+                 subscribeButtons.forEach(btn => btn.disabled = false);
+                 if(messageArea) messageArea.textContent = ''; // Clear message
+             }
+        }
+
+        // Handle subscription purchase by calling the Edge Function
+        async function handleSubscription(event) {
+            const button = event.target.closest('.subscribe-btn'); // Ensure we get the button itself
+            if (!button) return;
+
+            const tier = button.dataset.tier;
+            const cost = parseInt(button.dataset.cost, 10);
+
+            if (!tier || isNaN(cost)) {
+                console.error('Button missing tier or cost data');
+                return;
+            }
+
+            // Disable the clicked button immediately
+            button.disabled = true;
+            if (messageArea) {
+                 messageArea.textContent = `Processing ${tier}-Day subscription...`;
+                 messageArea.style.color = 'inherit'; // Reset color
+            }
+
+            try {
+                 // Ensure Supabase client is available
+                if (typeof supabaseClient === 'undefined') {
+                    throw new Error('Supabase client is not defined.');
+                }
+
+                console.log(`Invoking subscribe-trading-signals Edge Function for tier ${tier}, cost ${cost}...`);
+
+                // Call the Edge Function, passing tier and cost in the body
+                const { data, error } = await supabaseClient.functions.invoke('subscribe-trading-signals', {
+                    body: JSON.stringify({ tier, cost })
+                });
+
+                if (error) {
+                    // Handle specific errors or generic invoke errors
+                    console.error('Edge Function invocation error:', error);
+                    let errorMessage = error.message;
+                     if (error.context && error.context.json) {
+                         errorMessage = error.context.json.error || error.message;
+                    } else if (typeof error.details === 'string') {
+                         errorMessage = error.details;
+                    }
+                    throw new Error(errorMessage || 'Failed to process subscription.');
+                }
+
+                console.log('Edge Function response:', data);
+
+                // Handle success response from the function
+                if (data) {
+                    alert(data.message || `Successfully subscribed to ${tier}-Day Access!`);
+                    if (messageArea) {
+                        messageArea.textContent = data.message || `Successfully subscribed!`;
+                        messageArea.style.color = 'var(--success-icon)';
+                    }
+                    // Update UI with new data returned from function
+                    if (data.newBalance !== undefined && data.newBalance !== null && balanceDisplay) {
+                         balanceDisplay.textContent = `$${Number(data.newBalance).toFixed(2)}`;
+                    }
+                    if (statusElement) {
+                         statusElement.innerHTML = `Status: <span class="status-active">Active (${tier}-Day)</span>`;
+                    }
+                    if (data.newExpiryDate && expiryElement) {
+                         expiryElement.textContent = `Expires: ${new Date(data.newExpiryDate).toLocaleDateString()}`;
+                    }
+                    // Disable all subscribe buttons after successful subscription
+                    subscribeButtons.forEach(btn => btn.disabled = true);
+                } else {
+                     throw new Error('Subscription completed but no confirmation data received.');
+                }
+
+            } catch (error) {
+                console.error('Error during handleSubscription:', error);
+                alert(`Error: ${error.message}`); // Show specific error to user
+                if (messageArea) {
+                    messageArea.textContent = `Error: ${error.message}`;
+                    messageArea.style.color = 'var(--danger-icon)';
+                }
+                // Re-enable only the clicked button on failure
+                button.disabled = false;
             }
         }
 
@@ -168,7 +275,7 @@
 
         // Initial Load
         document.addEventListener('DOMContentLoaded', () => {
-            displayUserData();
+            displayUserData(); // Call the async function
         });
 
     </script>

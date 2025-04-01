@@ -20,9 +20,10 @@
         <section class="profile-card">
             <div class="profile-banner"></div>
             <div class="profile-avatar">
-                <span>J</span> <!-- Placeholder Initial -->
+                <span id="profile-avatar-initial">J</span> <!-- Placeholder Initial -->
+                <img id="profile-avatar-img" src="" alt="User Avatar" style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
             </div>
-            <h2 class="profile-name">John Doe</h2>
+            <h2 class="profile-name" id="profile-main-name">John Doe</h2>
 
             <div class="profile-details">
                 <!-- Full Name -->
@@ -30,7 +31,7 @@
                     <i class="fas fa-user detail-icon"></i>
                     <div class="detail-text">
                         <span class="detail-label">Full Name</span>
-                        <span class="detail-value">John Doe</span>
+                        <span class="detail-value" id="profile-detail-name">John Doe</span>
                     </div>
                 </div>
                 <!-- Email -->
@@ -38,17 +39,15 @@
                     <i class="fas fa-envelope detail-icon"></i>
                     <div class="detail-text">
                         <span class="detail-label">Email</span>
-                        <span class="detail-value">john@example.com</span>
+                        <span class="detail-value" id="profile-email-value">john@example.com</span>
                     </div>
                 </div>
                 <!-- E-Voucher Credits item removed -->
             </div>
 
             <div class="profile-actions">
-                <a href="#" class="action-button">
-                    <i class="fas fa-edit"></i> Edit Profile
-                </a>
-                <a href="#" class="action-button">
+                <!-- Edit Profile Button Removed -->
+                <a href="#" id="sign-out-btn" class="action-button">
                     <i class="fas fa-sign-out-alt"></i> Sign Out
                 </a>
             </div>
@@ -102,15 +101,15 @@
                                 <!-- Placeholder Address -->
                                 bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh
                             </div>
-                            <img id="crypto-qr-code" src="placeholder-qr.png" alt="Deposit QR Code" class="crypto-qr">
+                            <!-- QR Code Image Removed -->
                             <p class="crypto-warning">Ensure you send only <span id="selected-crypto-name-warn">Bitcoin</span> to this address. Sending other coins may result in loss of funds.</p>
 
                             <!-- Confirmation Section -->
                             <div class="form-group" style="margin-top: 20px; margin-bottom: 0;"> <!-- Added margin-top, removed default bottom margin -->
-                                <label for="crypto-txid">Transaction ID (Optional):</label>
-                                <input type="text" id="crypto-txid" class="form-control" placeholder="Enter Transaction ID / Hash">
+                                <label for="crypto-txid">Transaction ID (Required after posting amount):</label>
+                                <input type="text" id="crypto-txid" class="form-control" placeholder="Enter Transaction ID / Hash" disabled>
                             </div>
-                             <button id="confirm-crypto-sent-btn" class="btn btn-success" style="margin-top: 15px; width: 100%;">I Have Sent The Crypto</button> <!-- Added Confirmation button -->
+                             <button id="confirm-crypto-sent-btn" class="btn btn-success" style="margin-top: 15px; width: 100%;" disabled>I Have Sent The Crypto</button> <!-- Added Confirmation button -->
                         </div>
                     </div>
                 </div>
@@ -180,19 +179,27 @@
                 <i class="fas fa-dollar-sign"></i> Buy E-Vouchers
             </a>
         </section>
-
-    </div> <!-- End .container -->
-
+    <!-- Edit Profile Modal HTML Block Removed -->
     <!-- ***** BOTTOM NAVIGATION ***** -->
      <nav class="bottom-nav">
-         <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
-         <a href="profile.html" class="nav-item active"> <i class="fas fa-user"></i> <span>Profile</span> </a> <!-- Active -->
-         <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
-         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
-         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
-         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
-    </nav>
+          <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
+          <a href="profile.html" class="nav-item active"> <i class="fas fa-user"></i> <span>Profile</span> </a> <!-- Active -->
+          <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
+          
+          <!-- Hidden Items Container (Initially hidden on mobile) -->
+          <div id="more-menu-items" class="more-menu-items">
+             <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+             <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+             <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+             <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+          </div>
+          
+          <!-- More Button (Visible only on mobile) -->
+          <button id="more-menu-btn" class="nav-item more-menu-btn">
+             <i class="fas fa-bars"></i>
+             <span>More</span>
+          </button>
+     </nav>
     <!-- ***** END BOTTOM NAVIGATION ***** -->
 
     <!-- Voucher Redemption Modal -->
@@ -210,24 +217,27 @@
         </div>
     </div>
 
-    <script>
-        // --- Wallet Section Script ---
+    <!-- Supabase Client Library & Initialization -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="mobile-nav.js"></script>
+    <script src="script.js"></script>
 
-        // DOM Elements
+    <script>
+        // --- DOM Element References ---
+        // Wallet/Voucher/Crypto Elements
         const walletBalanceEl = document.getElementById('wallet-current-balance');
-        const voucherAmountInput = document.getElementById('voucher-amount'); // Changed from voucher-code
-        const purchaseVoucherBtn = document.getElementById('purchase-voucher-btn'); // Changed from redeem-voucher-btn
+        const voucherAmountInput = document.getElementById('voucher-amount');
+        const openVoucherModalBtn = document.getElementById('open-voucher-modal-btn');
         const cryptoSelect = document.getElementById('crypto-select');
-        const cryptoAmountInput = document.getElementById('crypto-amount'); // Added amount input
-        const postCryptoAmountBtn = document.getElementById('post-crypto-amount-btn'); // Added Post Amount button
+        const cryptoAmountInput = document.getElementById('crypto-amount');
+        const postCryptoAmountBtn = document.getElementById('post-crypto-amount-btn');
         const cryptoDepositAddressEl = document.getElementById('crypto-deposit-address');
-        const cryptoQrCodeEl = document.getElementById('crypto-qr-code');
+        // const cryptoQrCodeEl = document.getElementById('crypto-qr-code'); // Removed QR Code Element Ref
         const selectedCryptoNameEl = document.getElementById('selected-crypto-name');
         const selectedCryptoNameWarnEl = document.getElementById('selected-crypto-name-warn');
-        const cryptoTxidInput = document.getElementById('crypto-txid'); // Added TxID input
-        const confirmCryptoSentBtn = document.getElementById('confirm-crypto-sent-btn'); // Added Confirm button
+        const cryptoTxidInput = document.getElementById('crypto-txid');
+        const confirmCryptoSentBtn = document.getElementById('confirm-crypto-sent-btn');
         const transactionHistoryBody = document.getElementById('transaction-history-body');
-        // Modal Elements
         const voucherModal = document.getElementById('voucher-modal');
         const closeVoucherModalBtn = document.getElementById('close-voucher-modal-btn');
         const voucherModalAmountEl = document.getElementById('voucher-modal-amount');
@@ -235,36 +245,113 @@
         const modalRedeemBtn = document.getElementById('modal-redeem-btn');
         const modalVoucherMessageEl = document.getElementById('modal-voucher-message');
 
+        // Profile Display Elements
+        const profileAvatarInitialEl = document.getElementById('profile-avatar-initial');
+        const profileAvatarImgEl = document.getElementById('profile-avatar-img');
+        const profileMainNameEl = document.getElementById('profile-main-name');
+        const profileDetailNameEl = document.getElementById('profile-detail-name');
+        const profileEmailValueEl = document.getElementById('profile-email-value');
 
-        // Placeholder Data (Replace with actual API calls)
-        const cryptoAddresses = {
-            btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', // Example BTC Address
-            eth: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B', // Example ETH Address
-            usdt: '0xdAC17F958D2ee523a2206206994597C13D831ec7'  // Example USDT (ERC20) Address
-        };
-        const cryptoQrCodes = {
-            btc: 'placeholder-qr-btc.png', // Replace with actual QR code paths/generation
-            eth: 'placeholder-qr-eth.png',
-            usdt: 'placeholder-qr-usdt.png'
-        };
-        const cryptoNames = {
-            btc: 'Bitcoin',
-            eth: 'Ethereum',
-            usdt: 'Tether (ERC20)'
-        };
+        // Action Buttons
+        const signOutBtn = document.getElementById('sign-out-btn');
+
+        // Placeholder Data (Keep existing crypto data)
+        const cryptoAddresses = { btc: '...', eth: '...', usdt: '...' };
+        const cryptoQrCodes = { btc: '#', eth: '#', usdt: '#' };
+        const cryptoNames = { btc: 'Bitcoin', eth: 'Ethereum', usdt: 'Tether (ERC20)' };
 
         // --- Functions ---
 
-        // Placeholder: Fetch and display balance
-        function fetchAndDisplayBalance() {
-            // Simulate API call
-            const currentBalance = 125.50; // Example fetched balance
-            if (walletBalanceEl) {
-                walletBalanceEl.textContent = `$${currentBalance.toFixed(2)}`;
+        // --- Function to Load User Profile Data ---
+        async function loadUserProfile() {
+            console.log('Attempting to load user profile...');
+            if (typeof supabaseClient === 'undefined') {
+                console.error('Supabase client (supabaseClient) is not defined.');
+                return;
             }
-        }
 
-        // --- Modal Functions ---
+            const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+
+            if (authError || !user) {
+                console.error('Error fetching user or user not logged in:', authError);
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            console.log('User found:', user);
+            const userEmail = user.email;
+
+            // Fetch profile data from 'profiles' table
+            let profileData = null; // Initialize profileData to null
+            try {
+                const { data, error: profileError } = await supabaseClient
+                    .from('profiles')
+                    .select('first_name, last_name, avatar_url, balance') // Added balance
+                    .eq('id', user.id)
+                    .single();
+
+                // Check for errors *other than* row not found
+                if (profileError && profileError.code !== 'PGRST116') {
+                    throw profileError; // Re-throw actual errors
+                }
+                // If data is returned (even if it's just null for fields), assign it
+                profileData = data;
+                console.log('Raw profile data fetched:', profileData); // Log fetched data (or null)
+
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+                // profileData remains null if an error occurred
+            }
+
+            // --- Update UI based on fetched data (or defaults if profileData is null) ---
+
+            // Update Balance Display
+            const balanceEl = document.getElementById('wallet-current-balance');
+            if (balanceEl) {
+                // Use profileData?.balance which handles profileData being null
+                const balanceValue = profileData?.balance ?? 0; // Default to 0 if profileData is null or balance is null/undefined
+                console.log('Balance value before formatting:', balanceValue); // Log the value being used
+                balanceEl.textContent = `$${Number(balanceValue).toFixed(2)}`;
+                console.log('Updated balance display:', balanceEl.textContent);
+            }
+
+            // Determine display name and initial
+            let displayName = '';
+            let avatarInitial = '?';
+            // Use profileData safely
+            if (profileData?.first_name || profileData?.last_name) {
+                displayName = `${profileData.first_name || ''} ${profileData.last_name || ''}`.trim();
+                avatarInitial = (profileData.first_name || '?').charAt(0).toUpperCase();
+            } else {
+                const emailPrefix = userEmail.split('@')[0];
+                displayName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+                avatarInitial = displayName.charAt(0).toUpperCase();
+            }
+
+            // Update main profile display elements
+            if (profileMainNameEl) profileMainNameEl.textContent = displayName;
+            if (profileDetailNameEl) profileDetailNameEl.textContent = displayName;
+            if (profileEmailValueEl) profileEmailValueEl.textContent = userEmail;
+
+            // Update avatar display (Image or Initial)
+            // Use profileData safely
+            const avatarUrl = profileData?.avatar_url;
+            if (avatarUrl && profileAvatarImgEl && profileAvatarInitialEl) {
+                profileAvatarImgEl.src = avatarUrl;
+                profileAvatarImgEl.style.display = 'block';
+                profileAvatarInitialEl.style.display = 'none';
+                console.log('Displaying avatar image:', avatarUrl);
+            } else if (profileAvatarInitialEl && profileAvatarImgEl) {
+                profileAvatarInitialEl.textContent = avatarInitial;
+                profileAvatarInitialEl.style.display = 'block';
+                profileAvatarImgEl.style.display = 'none';
+                 console.log('Displaying avatar initial:', avatarInitial);
+            }
+        } // End of loadUserProfile function definition
+
+        // Removed redundant fetchAndDisplayBalance function
+
+        // --- Modal Functions --- (Keep existing voucher modal functions)
         function openVoucherModal() {
             const amount = parseFloat(voucherAmountInput.value);
             if (isNaN(amount) || amount <= 0) {
@@ -291,7 +378,6 @@
              }
         }
 
-        // Placeholder: Handle redeeming the code from the modal
         function redeemModalVoucherCode() {
             const code = modalVoucherCodeInput.value.trim().toUpperCase(); // Ensure uppercase for validation
             const amountText = voucherModalAmountEl.textContent; // Get amount from modal display
@@ -324,7 +410,8 @@
                         modalVoucherMessageEl.textContent = `Successfully redeemed $${amountText}! Balance updated.`;
                         modalVoucherMessageEl.className = 'modal-message success';
                      }
-                    fetchAndDisplayBalance(); // Update balance display
+                    // We might need to call loadUserProfile here if redemption affects balance
+                    // loadUserProfile();
                     fetchAndDisplayHistory(); // Refresh history (placeholder)
                     // Close modal after a delay
                     setTimeout(closeVoucherModal, 1500);
@@ -337,63 +424,178 @@
             }, 1000); // Simulate network delay
         }
 
-
         // Update Crypto Deposit UI based on selection
         function updateCryptoDepositUI() {
             const selectedCoin = cryptoSelect.value;
             const address = cryptoAddresses[selectedCoin] || 'N/A';
-            const qrCodeSrc = cryptoQrCodes[selectedCoin] || 'placeholder-qr.png';
+            const qrCodeSrc = cryptoQrCodes[selectedCoin] || '#'; // Use # as fallback
             const coinName = cryptoNames[selectedCoin] || 'Selected Coin';
 
             if (cryptoDepositAddressEl) cryptoDepositAddressEl.textContent = address;
-            if (cryptoQrCodeEl) cryptoQrCodeEl.src = qrCodeSrc;
+            // if (cryptoQrCodeEl) cryptoQrCodeEl.src = qrCodeSrc; // Removed QR Code Update
             if (selectedCryptoNameEl) selectedCryptoNameEl.textContent = coinName;
             if (selectedCryptoNameWarnEl) selectedCryptoNameWarnEl.textContent = coinName;
         }
 
-        // Placeholder: Handle posting the intended crypto deposit amount
-        function postCryptoAmount() {
-            const amount = parseFloat(cryptoAmountInput.value);
-            const selectedCoin = cryptoSelect.value;
-            if (isNaN(amount) || amount <= 0) {
-                alert('Please enter a valid positive amount for the crypto deposit.');
-                return;
+        // Handle posting the intended crypto deposit amount
+        async function postCryptoAmount() {
+            // Disable button temporarily
+            if(postCryptoAmountBtn) postCryptoAmountBtn.disabled = true;
+            // Consider adding a loading indicator here
+
+            try {
+                // 1. Get User
+                if (typeof supabaseClient === 'undefined') throw new Error('Supabase client not available.');
+                const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+                if (authError || !user) throw new Error('User not authenticated.');
+
+                // 2. Get Inputs & Validate
+                const amount = parseFloat(cryptoAmountInput.value);
+                const selectedCoin = cryptoSelect.value;
+
+                if (!selectedCoin) {
+                     alert('Please select a coin.');
+                     return; // Exit early
+                }
+                if (isNaN(amount) || amount <= 0) {
+                    alert('Please enter a valid positive amount for the crypto deposit.');
+                    return; // Exit early
+                }
+
+                // 3. Prepare data for insertion
+                const depositData = {
+                    user_id: user.id,
+                    coin_symbol: selectedCoin,
+                    amount_usd: amount,
+                    status: 'pending' // Initial status
+                    // txid will be null by default
+                };
+
+                console.log('Attempting to insert crypto deposit:', depositData);
+
+                // 4. Insert into Supabase and select the ID of the new record
+                const { data: insertedData, error: insertError } = await supabaseClient
+                    .from('crypto_deposits')
+                    .insert([depositData])
+                    .select('id') // Select the ID of the inserted row
+                    .single(); // Expecting a single row back
+
+                if (insertError) {
+                    throw insertError; // Throw error to be caught by catch block
+                }
+
+                if (!insertedData || !insertedData.id) {
+                    throw new Error('Failed to retrieve ID of the created deposit record.');
+                }
+
+                const depositRecordId = insertedData.id;
+                console.log('Crypto deposit intention posted successfully with ID:', depositRecordId);
+
+                // Store the ID for the next step (e.g., using a data attribute or a global variable)
+                // Using a data attribute on the button is one way:
+                if(confirmCryptoSentBtn) confirmCryptoSentBtn.dataset.depositId = depositRecordId;
+
+                // 5. Success Feedback & Enable Next Step
+                alert(`Amount $${amount.toFixed(2)} for ${cryptoNames[selectedCoin]} posted. Please send crypto and enter the Transaction ID below.`);
+
+                // Enable TXID input and Confirm button
+                if(cryptoTxidInput) cryptoTxidInput.disabled = false;
+                if(confirmCryptoSentBtn) confirmCryptoSentBtn.disabled = false;
+
+                // Optionally clear amount input
+                // cryptoAmountInput.value = '';
+
+            } catch (error) {
+                // 6. Error Feedback
+                console.error('Error posting crypto deposit amount:', error);
+                alert(`Error posting amount: ${error.message || 'Please try again.'}`);
+            } finally {
+                 // Re-enable button regardless of success/failure
+                 if(postCryptoAmountBtn) postCryptoAmountBtn.disabled = false;
+                 // Remove loading indicator here
             }
-            // Simulate posting data to backend (e.g., Supabase)
-            console.log(`Posting intended crypto deposit: Amount=${amount}, Coin=${selectedCoin}`);
-            alert(`Amount $${amount.toFixed(2)} for ${cryptoNames[selectedCoin]} posted. Please proceed with sending the crypto. (Backend logic needed)`);
-            // TODO: Add actual API call to Supabase or backend
         }
 
-        // Placeholder: Handle confirming crypto has been sent
-        function confirmCryptoSent() {
-            const selectedCoin = cryptoSelect.value;
-            const amount = parseFloat(cryptoAmountInput.value); // Get amount again or store it
-            const txid = cryptoTxidInput.value.trim();
+        // Handle confirming crypto has been sent and updating the record
+        async function confirmCryptoSent() {
+            // Disable button
+            if(confirmCryptoSentBtn) confirmCryptoSentBtn.disabled = true;
+            // Add loading indicator?
 
-             if (isNaN(amount) || amount <= 0) {
-                // It might be better UX to disable the confirm button until amount is valid
-                alert('Please ensure a valid deposit amount is entered above.');
-                return;
+            try {
+                // 1. Get User (needed for potential checks, though not strictly for update by ID)
+                 if (typeof supabaseClient === 'undefined') throw new Error('Supabase client not available.');
+                 const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+                 if (authError || !user) throw new Error('User not authenticated.');
+
+                // 2. Get TXID and Deposit Record ID
+                const txid = cryptoTxidInput.value.trim();
+                const depositRecordId = confirmCryptoSentBtn?.dataset.depositId; // Retrieve ID from button
+
+                if (!txid) {
+                    alert('Please enter the Transaction ID.');
+                    // Re-enable button if TXID is missing, allowing user to enter it
+                    if(confirmCryptoSentBtn) confirmCryptoSentBtn.disabled = false;
+                    return; // Exit early
+                }
+                if (!depositRecordId) {
+                    // This case shouldn't happen if postCryptoAmount worked, but good to handle
+                    throw new Error('Could not find the deposit record ID. Please post the amount again.');
+                }
+
+                // 3. Prepare update data
+                const updateData = {
+                    txid: txid,
+                    status: 'confirming' // Update status
+                };
+
+                console.log(`Attempting to update crypto deposit ID ${depositRecordId} with:`, updateData);
+
+                // 4. Update Supabase record
+                const { error: updateError } = await supabaseClient
+                    .from('crypto_deposits')
+                    .update(updateData)
+                    .eq('id', depositRecordId) // Target the specific record
+                    .eq('user_id', user.id); // Ensure user owns the record (extra check)
+
+                if (updateError) {
+                    throw updateError;
+                }
+
+                // 5. Success Feedback
+                console.log('Crypto deposit confirmation (TXID) submitted successfully.');
+                alert(`Transaction ID submitted. Your deposit status is now 'confirming'. Admin will verify shortly.`);
+
+                // Clear TXID input and disable fields again until next deposit
+                if(cryptoTxidInput) {
+                    cryptoTxidInput.value = '';
+                    cryptoTxidInput.disabled = true;
+                }
+                // Keep button disabled after successful submission for this deposit
+                // confirmCryptoSentBtn.disabled = true;
+                // Remove the stored ID
+                if(confirmCryptoSentBtn) delete confirmCryptoSentBtn.dataset.depositId;
+
+
+            } catch (error) {
+                 // 6. Error Feedback
+                console.error('Error confirming crypto deposit:', error);
+                alert(`Error submitting Transaction ID: ${error.message || 'Please try again.'}`);
+                 // Re-enable button on error ONLY if we want user to retry submitting TXID for SAME deposit
+                 if(confirmCryptoSentBtn) confirmCryptoSentBtn.disabled = false;
+            } finally {
+                 // Remove loading indicator
+                 // Button state is handled within try/catch based on outcome
             }
-
-            // Simulate sending notification data to backend (e.g., Supabase)
-            console.log(`Confirming Crypto Sent: Coin=${selectedCoin}, Amount=${amount}, TxID=${txid || 'Not Provided'}`);
-            alert(`Thank you for confirming your deposit of $${amount.toFixed(2)} ${cryptoNames[selectedCoin]}. ${txid ? 'TxID: ' + txid + '.' : ''} Admin will verify the transaction shortly. (Backend logic needed)`);
-
-            // Optionally clear inputs or give further UI feedback
-            // cryptoAmountInput.value = '';
-            // cryptoTxidInput.value = '';
         }
 
 
-        // Placeholder: Fetch and display transaction history
+        // Placeholder: Fetch and display transaction history (Keep existing)
         function fetchAndDisplayHistory() {
             // In a real app, fetch data from API and generate rows dynamically
             console.log("Fetching transaction history... (Using placeholder data)");
             // The existing HTML rows serve as placeholders for now.
             // TODO: Clear existing rows (if any) and populate with fetched data
-            // Example dynamic row creation (if needed later):
             /*
             const transactions = [ ... fetched data ... ];
             transactionHistoryBody.innerHTML = ''; // Clear placeholders
@@ -406,45 +608,42 @@
                     <td class="${tx.amount > 0 ? 'amount-positive' : 'amount-negative'}">${tx.amount > 0 ? '+' : ''}$${Math.abs(tx.amount).toFixed(2)}</td>
                     <td class="status-${tx.status.toLowerCase()}">${tx.status}</td>
                 `;
-            });
             */
-        }
+        } // End of fetchAndDisplayHistory function definition
+
 
         // --- Event Listeners ---
-        const openVoucherModalBtn = document.getElementById('open-voucher-modal-btn'); // Get the correct button ID
-        if (openVoucherModalBtn) {
-            // Note: The purchaseVoucherBtn variable might still exist from previous steps but refers to the old button ID.
-            // We use the new variable openVoucherModalBtn here.
-            openVoucherModalBtn.addEventListener('click', openVoucherModal); // Call open modal function
-        }
-        if (closeVoucherModalBtn) {
-            closeVoucherModalBtn.addEventListener('click', closeVoucherModal);
-        }
-        if (modalRedeemBtn) {
-            modalRedeemBtn.addEventListener('click', redeemModalVoucherCode);
-        }
-        // Close modal if clicking outside the container
-        if (voucherModal) {
-            voucherModal.addEventListener('click', (event) => {
-                if (event.target === voucherModal) { // Check if click is on the overlay itself
-                    closeVoucherModal();
+        // Wallet/Voucher/Crypto Listeners
+        if (openVoucherModalBtn) { openVoucherModalBtn.addEventListener('click', openVoucherModal); }
+        if (closeVoucherModalBtn) { closeVoucherModalBtn.addEventListener('click', closeVoucherModal); }
+        if (modalRedeemBtn) { modalRedeemBtn.addEventListener('click', redeemModalVoucherCode); }
+        if (voucherModal) { voucherModal.addEventListener('click', (event) => { if (event.target === voucherModal) closeVoucherModal(); }); }
+        if (cryptoSelect) { cryptoSelect.addEventListener('change', updateCryptoDepositUI); }
+        if (postCryptoAmountBtn) { postCryptoAmountBtn.addEventListener('click', postCryptoAmount); }
+        if (confirmCryptoSentBtn) { confirmCryptoSentBtn.addEventListener('click', confirmCryptoSent); }
+
+        // Sign Out Listener
+        if (signOutBtn) {
+            signOutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                console.log('Signing out...');
+                try {
+                    const { error } = await supabaseClient.auth.signOut();
+                    if (error) throw error;
+                    console.log('Sign out successful.');
+                    window.location.href = 'signup.html'; // Redirect after sign out
+                } catch (error) {
+                    console.error('Error signing out:', error);
+                    alert(`Sign out failed: ${error.message}`);
                 }
             });
         }
-
-        if (cryptoSelect) {
-            cryptoSelect.addEventListener('change', updateCryptoDepositUI);
-        }
-        if (postCryptoAmountBtn) { // Added listener for Post Amount button
-            postCryptoAmountBtn.addEventListener('click', postCryptoAmount);
-        }
-        if (confirmCryptoSentBtn) { // Added listener for Confirm Sent button
-            confirmCryptoSentBtn.addEventListener('click', confirmCryptoSent);
-        }
+        // Removed Edit Profile Listeners
 
         // --- Initial Load ---
         document.addEventListener('DOMContentLoaded', () => {
-            fetchAndDisplayBalance();
+            loadUserProfile(); // Load user profile data FIRST
+            // Removed call to deleted fetchAndDisplayBalance()
             updateCryptoDepositUI(); // Set initial crypto UI
             fetchAndDisplayHistory(); // Load history (currently uses placeholders)
         });

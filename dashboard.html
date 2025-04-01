@@ -92,26 +92,88 @@
 
     <!-- ***** BOTTOM NAVIGATION ***** -->
      <nav class="bottom-nav">
+         <!-- Always Visible Items -->
          <a href="dashboard.html" class="nav-item active"> <i class="fas fa-home"></i> <span>Home</span> </a> <!-- Active -->
          <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
          <a href="ecard.html" class="nav-item"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a>
-         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
-         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
-         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
-         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+
+         <!-- Hidden Items Container (Initially hidden by CSS on mobile) -->
+         <div id="more-menu-items" class="more-menu-items">
+             <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+             <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+             <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+             <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+         </div>
+
+         <!-- More Button (Visible only on mobile via CSS) -->
+         <button id="more-menu-btn" class="nav-item more-menu-btn">
+             <i class="fas fa-bars"></i>
+             <span>More</span>
+         </button>
     </nav>
     <!-- ***** END BOTTOM NAVIGATION ***** -->
 
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="mobile-nav.js"></script>
     <script src="script.js"></script>
     <script>
-        // Placeholder function to update balance - replace with actual data fetching
-        function fetchAndUpdateBalance() {
-            // In a real app, you'd fetch this from a server/API
-            const currentBalance = 123.45; // Example balance
-            document.getElementById('user-credit-balance').textContent = `$${currentBalance.toFixed(2)}`;
+        // Function to load dashboard data (including balance)
+        async function loadDashboardData() {
+            console.log('Attempting to load dashboard data...');
+            const balanceEl = document.getElementById('user-credit-balance');
+
+            // Ensure Supabase client is available
+            if (typeof supabaseClient === 'undefined') {
+                console.error('Supabase client (supabaseClient) is not defined.');
+                if (balanceEl) balanceEl.textContent = '$?.??'; // Indicate error
+                return;
+            }
+
+            // Get authenticated user
+            const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+
+            if (authError || !user) {
+                console.error('Error fetching user or user not logged in:', authError);
+                // Redirect to login if not authenticated
+                window.location.href = 'signup.html';
+                return;
+            }
+            console.log('Dashboard: User found:', user.id);
+
+            // Fetch balance from profiles table
+            let balanceValue = 0; // Default balance
+            try {
+                const { data: profileData, error: profileError } = await supabaseClient
+                    .from('profiles')
+                    .select('balance')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profileError && profileError.code !== 'PGRST116') { // Ignore 'row not found'
+                    throw profileError;
+                }
+
+                if (profileData?.balance !== undefined && profileData?.balance !== null) {
+                    balanceValue = profileData.balance;
+                }
+                console.log('Dashboard: Profile data fetched:', profileData);
+
+            } catch (error) {
+                console.error('Dashboard: Error fetching profile balance:', error);
+                // Keep balanceValue at 0 in case of error
+            }
+
+            // Update balance display
+            if (balanceEl) {
+                balanceEl.textContent = `$${Number(balanceValue).toFixed(2)}`;
+                console.log('Dashboard: Updated balance display:', balanceEl.textContent);
+            }
         }
-        fetchAndUpdateBalance(); // Call function on page load
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
     </script>
 </body>
 </html>

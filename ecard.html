@@ -125,12 +125,23 @@
          <a href="dashboard.html" class="nav-item"> <i class="fas fa-home"></i> <span>Home</span> </a>
          <a href="profile.html" class="nav-item"> <i class="fas fa-user"></i> <span>Profile</span> </a>
          <a href="ecard.html" class="nav-item active"> <i class="fas fa-dollar-sign"></i> <span>Vouchers</span> </a> <!-- Active -->
-         <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
-         <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
-         <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
-         <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a> <!-- Placeholder -->
+         
+         <!-- Hidden Items Container (Initially hidden on mobile) -->
+         <div id="more-menu-items" class="more-menu-items">
+            <a href="copy_trading.html" class="nav-item"> <i class="fas fa-copy"></i> <span>Copy Trading</span> </a>
+            <a href="trading_signals.html" class="nav-item"> <i class="fas fa-signal"></i> <span>Signals</span> </a>
+            <a href="courses.html" class="nav-item"> <i class="fas fa-graduation-cap"></i> <span>Courses</span> </a>
+            <a href="signup.html" class="nav-item"> <i class="fas fa-sign-in-alt"></i> <span>Login/Logout</span> </a>
+         </div>
+         
+         <!-- More Button (Visible only on mobile) -->
+         <button id="more-menu-btn" class="nav-item more-menu-btn">
+            <i class="fas fa-bars"></i>
+            <span>More</span>
+         </button>
     </nav>
 
+    <script src="mobile-nav.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
